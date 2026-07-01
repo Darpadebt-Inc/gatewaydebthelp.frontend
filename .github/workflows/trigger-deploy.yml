@@ -1,0 +1,79 @@
+name: Trigger Production Deploy (proxy-mediated)
+
+# AUTOMATED on-push deploy trigger. This PUBLIC repo holds ZERO secrets: it authenticates
+# to the backend deploy proxy with an EPHEMERAL GitHub OIDC token (id-token: write) minted
+# per run — never a stored credential. The backend worker `069-deploy-trigger` verifies the
+# token (signature + strict claim allowlist) and forwards a repository_dispatch to the
+# backend "Deploy Frontends to Cloudflare Pages" workflow (the single credentialed,
+# smoke-checked deploy authority). The Cloudflare token never lives here.
+#
+# PROXY_URL intentionally points at debthelpform.com: the 069-deploy-trigger worker is
+# routed on the debthelpform.com and debtreliefguard.com zones, and any of its routes reach
+# the same worker/trust boundary — mirrors the sister frontends' trigger-deploy.yml exactly
+# rather than requiring a new Cloudflare route on the gatewaydebthelp.com zone.
+# Full design + activation: backend docs/HORIZON-SYNC-DEPLOY-TRIGGER.md.
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write   # mint OIDC; no secret is stored in this public repo
+
+concurrency:
+  # Do not cancel an in-flight trigger; the worker coalesces bursts into one deploy.
+  group: trigger-deploy-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  trigger:
+    name: Mint OIDC and notify deploy proxy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger backend deploy via OIDC-authenticated proxy
+        env:
+          PROXY_URL: "https://debthelpform.com/api/mesh/069-deploy-trigger/trigger"
+          OIDC_AUDIENCE: "pages-deploy.darpadebt"
+        run: |
+          set -euo pipefail
+
+          # 1) Mint an Actions OIDC token bound to the proxy audience. The request URL
+          #    already carries a query string, so append &audience=. Nothing is persisted.
+          req="${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${OIDC_AUDIENCE}"
+          token=$(curl -sS -m 20 -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" "$req" | jq -r '.value')
+          if [ -z "${token}" ] || [ "${token}" = "null" ]; then
+            echo "::error title=OIDC mint failed::Could not obtain an Actions OIDC token (is 'id-token: write' set?)."
+            exit 1
+          fi
+
+          # 2) Call the proxy. The worker authorizes on the OIDC claims; the JSON body is
+          #    informational. The non-secret marker header lets an optional WAF allow rule
+          #    pass this path (security stays at the worker).
+          body=$(jq -nc --arg r "$GITHUB_REPOSITORY" --arg s "$GITHUB_SHA" --arg f "$GITHUB_REF" \
+            '{repository:$r, sha:$s, ref:$f}')
+          code=$(curl -sS -m 30 -o resp.json -w '%{http_code}' -X POST "$PROXY_URL" \
+            -H "Authorization: Bearer ${token}" \
+            -H "Content-Type: application/json" \
+            -H "x-mesh-deploy-trigger: 1" \
+            --data "$body" || echo 000)
+
+          echo "Proxy responded HTTP ${code}"
+          cat resp.json 2>/dev/null || true
+          echo ""
+
+          # 3) Fail RED on anything but accept/coalesced — never a silent miss.
+          case "$code" in
+            200|202)
+              echo "::notice title=Deploy triggered::Backend deploy dispatched (HTTP ${code})."
+              ;;
+            401|403)
+              echo "::error title=Deploy trigger rejected::Proxy returned HTTP ${code} (OIDC claim/allowlist). See body above."
+              exit 1
+              ;;
+            *)
+              echo "::error title=Deploy trigger failed::Proxy returned HTTP ${code}. A WAF/bot challenge appears as HTML/403/503 — install the documented allow rule. See backend docs/HORIZON-SYNC-DEPLOY-TRIGGER.md."
+              exit 1
+              ;;
+          esac
