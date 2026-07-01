@@ -35,7 +35,7 @@ html{scroll-padding-top:var(--header-h,150px)}
 /* ---- Sticky primary nav ---- */
 .site-nav{position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:nowrap;background:linear-gradient(135deg,#0b2b4a,#0c5a8f 55%,#0369a1);border:1px solid #0b2b4a;border-radius:18px;padding:10px 16px;margin:10px var(--pad) 0;box-shadow:0 10px 30px rgba(2,6,23,.12)}
 .site-nav .brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
-.site-nav .brand img{display:block;height:56px;width:auto;max-width:min(70vw,280px);object-fit:contain;padding:6px 14px;border-radius:14px;background:#0b2b4a;border:1px solid rgba(56,189,248,.35);box-shadow:0 10px 26px rgba(2,6,23,.25)}
+.site-nav .brand img{display:block;height:92px;width:auto;max-width:min(70vw,320px);object-fit:contain;padding:8px 18px;border-radius:14px;background:#0b2b4a;border:1px solid rgba(56,189,248,.35);box-shadow:0 10px 26px rgba(2,6,23,.25)}
 .site-nav .links{display:flex;gap:8px;align-items:center;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
 .site-nav .links a{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:12px;background:#fff;color:var(--ink);border:1px solid var(--ink);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
 .site-nav .links a:hover{background:#e2e8f0}
