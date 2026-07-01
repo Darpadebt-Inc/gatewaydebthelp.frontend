@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gateway Debt Help — Compare Debt Relief Options in 60 Seconds</title>
+<meta name="description" content="Gateway Debt Help is the GFSR options hub for debt consolidation, debt settlement, credit card relief, and bankruptcy alternatives. Answer a few questions for a free, no-obligation options summary." />
+<meta name="robots" content="index,follow,max-image-preview:large" />
+<link rel="canonical" href="https://gatewaydebthelp.com/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Gateway Debt Help — Compare Debt Relief Options in 60 Seconds" />
+<meta property="og:description" content="The GFSR pillar hub for debt consolidation, settlement, credit card relief, debt validation, bankruptcy alternatives, and state rules. No upfront fees. No obligation." />
+<meta property="og:url" content="https://gatewaydebthelp.com/" />
+<meta property="og:site_name" content="Gateway Debt Help" />
+<meta property="og:image" content="https://gatewaydebthelp.com/gatewaylego.svg" />
+<meta property="og:image:type" content="image/svg+xml" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Gateway Debt Help — Compare Debt Relief Options in 60 Seconds" />
+<meta name="twitter:description" content="Answer a few questions to review consolidation, settlement, hardship, and other unsecured-debt options. No upfront fees, privacy-first. No obligation." />
+<meta name="theme-color" content="#0369a1" />
+<link rel="icon" type="image/svg+xml" href="/gatewaylego.svg" />
+<link rel="apple-touch-icon" href="/gatewaylego.svg" />
+<link rel="stylesheet" href="/shared.css" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":["Organization","FinancialService"],"@id":"https://gatewaydebthelp.com/#gfsr","name":"Gateway Financial Settlement Relief, LLC","alternateName":["GFSR","Gateway Debt Help","Debt Relief Guard","Debt Help Form"],"url":"https://gatewaydebthelp.com/","telephone":"+1-888-437-7141","sameAs":["https://debtreliefguard.com/","https://debthelpform.com/","https://gatewaydebthelp.com/","https://gatewayfinancialsettlementrelief.com/"],"disambiguatingDescription":"Not affiliated with Gateway Debt Relief of Costa Mesa, CA."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Gateway Debt Help","url":"https://gatewaydebthelp.com/","publisher":{"@id":"https://gatewaydebthelp.com/#gfsr"}}
+</script>
+<!-- TODO(marketing): insert Bing UET / Meta Pixel tags once ad-account IDs are provisioned for gatewaydebthelp.com -->
+</head>
+<body>
+<div class="shell">
+
+  <nav class="site-nav" role="navigation" aria-label="Primary">
+    <a class="brand" href="/" aria-label="Gateway Debt Help home">
+      <img src="/gatewaylego.svg" alt="Gateway Debt Help logo" width="1024" height="1024" decoding="async" />
+    </a>
+    <button class="menu-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <div class="links" id="navLinks">
+      <a href="/debt-consolidation.html">Consolidation</a>
+      <a href="/debt-settlement.html">Settlement</a>
+      <a href="/credit-card-relief.html">Credit Cards</a>
+      <a href="/debt-validation-rights.html">Your Rights</a>
+      <a href="/bankruptcy-alternatives.html">Bankruptcy Alts</a>
+      <a href="/state-rules.html">State Rules</a>
+      <a href="/faq.html">FAQ</a>
+      <a class="call" href="tel:+18884377141">Call +1 (888) 437-7141</a>
+    </div>
+  </nav>
+
+  <header class="hero cta-panel card" id="entry">
+    <h1>Buried in debt? See every relief option that fits your situation — in about 60 seconds.</h1>
+    <p class="sub">Gateway Debt Help compares consolidation, settlement, hardship, and bankruptcy-alternative programs side by side, so you choose with facts instead of guesswork. No hard credit check to see your options. No upfront fees.</p>
+    <div style="margin-top:16px">
+      <button class="primary" id="startBtn">Start my 60-second options check</button>
+    </div>
+    <p style="margin-top:10px"><a href="tel:+18884377141">or talk to a person now</a></p>
+    <ul class="hero-benefits">
+      <li><span>🔒</span>No hard credit check for this intake</li>
+      <li><span>✅</span>No upfront debt-relief fees</li>
+      <li><span>🛡️</span>Privacy-first, secure routing</li>
+      <li><span>⏱️</span>Options summary in about 60 seconds</li>
+    </ul>
+  </header>
+
+  <div class="card pad" aria-label="Trust signals" style="margin:14px auto;max-width:var(--max)">
+    <div class="muted" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <a href="https://www.bbb.org/us/fl/inglis/profile/debt-relief-services/gateway-financial-settlement-relief-llc-0733-235973278" target="_blank" rel="noopener nofollow" class="badge">BBB Profile — A– rating</a>
+      <span class="badge">FTC-aligned • No upfront fees</span>
+      <span class="badge">TCPA-compliant contact preferences</span>
+      <span class="badge">Secure &amp; confidential</span>
+    </div>
+  </div>
+
+  <div class="card page-card cta-panel hidden" id="survey">
+    <div class="progress"><i id="progressBar"></i></div>
+    <div class="muted" id="stepLabel">Step 1 of 4</div>
+    <div id="stepMount"></div>
+    <div class="muted" style="margin-top:8px">Secure &amp; confidential. No obligation.</div>
+  </div>
+
+  <div class="card page-card cta-panel hidden" id="leadGate">
+    <div class="prompt">Thanks — your answers help build your options summary.</div>
+    <div class="muted">Where should we send it?</div>
+    <form id="leadForm" autocomplete="on">
+      <input type="text" name="first" placeholder="First name" required autocomplete="given-name" />
+      <input type="email" name="email" placeholder="Email" required inputmode="email" autocomplete="email" />
+      <input type="tel" name="phone" placeholder="Phone" required inputmode="tel" autocomplete="tel" />
+      <input type="text" name="zip" placeholder="ZIP code" required inputmode="numeric" pattern="\d{5}" autocomplete="postal-code" maxlength="5" />
+      <input type="text" name="hp" id="hp" class="hidden" tabindex="-1" autocomplete="off" />
+      <input type="hidden" name="form_ts" id="form_ts" />
+      <label class="consent">
+        <input type="checkbox" name="consent_terms" required />
+        <span>I agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms</a> and <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
+      </label>
+      <label class="consent">
+        <input type="checkbox" name="consent_marketing" value="yes" />
+        <span>By checking this box, I agree that Gateway Financial Settlement Relief, LLC and its program partners may contact me at the phone number and email address I provided — by call, text/SMS, and email, including using an automatic telephone dialing system or an artificial or prerecorded voice — about debt relief options. Message and data rates may apply. I understand consent is not required to purchase any goods or services, and I may revoke this consent at any time by calling <a href="tel:+18884377141">+1 (888) 437-7141</a> or emailing <a href="mailto:support@gatewaydebthelp.com">support@gatewaydebthelp.com</a>.</span>
+      </label>
+      <p class="legal">Consent is not required to purchase services.</p>
+      <button class="button primary" type="submit">Send my options summary</button>
+      <p class="muted hidden" id="leadStatus" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+
+  <div class="card page-card cta-panel hidden" id="results">
+    <div class="prompt">Example payment ranges (estimates only)</div>
+    <div class="calc">
+      <div><span class="badge" id="calcDebt">$—</span> total debt</div>
+      <div style="margin-top:10px">Estimated consolidated payment range: <strong id="calcPayment">$— / mo</strong></div>
+      <div class="muted" style="margin-top:6px">Estimates are examples, not guarantees. Your actual terms depend on program/lender review and are not approved or endorsed by any government agency.</div>
+      <div class="controls" style="display:flex;gap:10px;flex-wrap:wrap">
+        <a id="callCta" class="callnow" href="#">Call now</a>
+        <button class="next" id="doneBtn" style="width:auto">Back to start</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="section container">
+    <h2 style="color:var(--navy);font-size:clamp(20px,2vw + 10px,28px)">Six ways we help you get out from under debt</h2>
+    <p class="muted" style="max-width:760px">Gateway Debt Help is the shared options hub for the Gateway Financial Settlement Relief (GFSR) family — including <a href="https://debtreliefguard.com/" target="_blank" rel="noopener">DebtReliefGuard.com</a> and <a href="https://debthelpform.com/" target="_blank" rel="noopener">DebtHelpForm.com</a>. Explore the six core paths people use to deal with unsecured debt.</p>
+    <div class="related-grid" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr))">
+      <a class="related-card" href="/debt-consolidation.html">
+        <div class="k">Path 1</div>
+        <div class="t">Debt Consolidation</div>
+        <p class="muted" style="margin:8px 0 0;font-size:14px">Combine multiple balances into one simpler monthly payment.</p>
+      </a>
+      <a class="related-card" href="/debt-settlement.html">
+        <div class="k">Path 2</div>
+        <div class="t">Debt Settlement</div>
+        <p class="muted" style="margin:8px 0 0;font-size:14px">Negotiate lump-sum resolutions for less than the full balance owed.</p>
+      </a>
+      <a class="related-card" href="/credit-card-relief.html">
+        <div class="k">Path 3</div>
+        <div class="t">Credit Card Hardship Relief</div>
+        <p class="muted" style="margin:8px 0 0;font-size:14px">Lower rates, waived fees, or modified terms directly from issuers.</p>
+      </a>
+      <a class="related-card" href="/debt-validation-rights.html">
+        <div class="k">Path 4</div>
+        <div class="t">Debt Validation &amp; Your Rights</div>
+        <p class="muted" style="margin:8px 0 0;font-size:14px">Know what collectors must prove, and what the FDCPA protects you from.</p>
+      </a>
+      <a class="related-card" href="/bankruptcy-alternatives.html">
+        <div class="k">Path 5</div>
+        <div class="t">Bankruptcy Alternatives</div>
+        <p class="muted" style="margin:8px 0 0;font-size:14px">Options worth reviewing before considering Chapter 7 or Chapter 13.</p>
+      </a>
+      <a class="related-card" href="/state-rules.html">
+        <div class="k">Path 6</div>
+        <div class="t">State-by-State Rules</div>
+        <p class="muted" style="margin:8px 0 0;font-size:14px">Debt relief and collection laws vary by state — see what applies to you.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="card pad" style="display:flex;gap:18px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+      <div style="max-width:640px">
+        <h2 style="color:var(--navy);margin-top:0;font-size:clamp(19px,2vw + 8px,24px)">One family, one standard of care</h2>
+        <p class="muted">Gateway Debt Help, DebtReliefGuard.com, and DebtHelpForm.com are all operated by Gateway Financial Settlement Relief, LLC (GFSR). Same phone number, same privacy commitments, same FTC-aligned, no-upfront-fee approach — wherever you start.</p>
+      </div>
+      <a class="btn ghost" href="/about.html">Learn about our ecosystem →</a>
+    </div>
+  </section>
+
+</div>
+
+<div class="footer-sticky">
+  <div class="trust">🔒 Secure &amp; Confidential</div>
+  <a class="callnow" id="stickyCall" href="tel:+18884377141">Call Now</a>
+</div>
+
+<footer style="border-top:1px solid var(--border);background:#fff;margin-top:18px">
+  <div class="container" style="padding-top:18px">
+    <nav aria-label="More pages" class="foot-links">
+      <a href="/debt-consolidation.html">Debt Consolidation</a> ·
+      <a href="/debt-settlement.html">Debt Settlement</a> ·
+      <a href="/credit-card-relief.html">Credit Card Relief</a> ·
+      <a href="/debt-validation-rights.html">Debt Validation</a> ·
+      <a href="/bankruptcy-alternatives.html">Bankruptcy Alternatives</a> ·
+      <a href="/state-rules.html">State Rules</a> ·
+      <a href="/about.html">About</a> ·
+      <a href="/faq.html">FAQ</a> ·
+      <a href="/scams-compliance.html">Scams &amp; Compliance</a> ·
+      <a href="/contact.html">Contact</a> ·
+      <a href="/privacy.html">Privacy</a> ·
+      <a href="/terms.html">Terms</a>
+    </nav>
+    <div class="foot-copy">
+      © <span id="y"></span> GatewayDebtHelp.com — a service of Gateway Financial Settlement Relief, LLC (GFSR). Not affiliated with "Gateway Debt Relief" of Costa Mesa, CA or any other company.
+      <br />Debt settlement may negatively affect your credit and could involve tax consequences; results are not guaranteed and vary based on your circumstances. This is not a lender, law firm, or credit counseling agency, and nothing here is legal, tax, or financial advice.
+      <span style="margin-left:6px">•</span>
+      <a href="/privacy.html">Privacy</a>
+      <span>•</span>
+      <a href="/terms.html">Terms</a>
+      <span>•</span>
+      <a href="https://www.bbb.org/us/fl/inglis/profile/debt-relief-services/gateway-financial-settlement-relief-llc-0733-235973278" target="_blank" rel="noopener nofollow">BBB Profile (A–)</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/eng038.sitewide.js" defer></script>
+<script>
+const CONFIG = { LEAD_ENDPOINT: "/api/mesh/036-lead-router/ingest", SITE_TAG: "GDH", CALL_NUMBER: "+1 (888) 437-7141" };
+const state = { step: 0, answers: { debt_amount: null, debt_type: [], payment_status: null, credit_band: null, state: null } };
+
+const UTM_PARAMS = (() => {
+  const params = new URLSearchParams(window.location.search);
+  const out = {};
+  params.forEach((value, key) => {
+    if (!value) return;
+    const normalizedKey = key.trim().toLowerCase();
+    if (!normalizedKey) return;
+    if (/^(utm_[a-z0-9_]+|gclid|msclkid|fbclid|ttclid|yclid)$/.test(normalizedKey)) {
+      out[normalizedKey] = value.trim();
+    }
+  });
+  return out;
+})();
+
+const LANDING_CONTEXT = {
+  path: window.location.pathname,
+  query: window.location.search || "",
+  referrer: document.referrer || null
+};
+
+// === Responsive navigation toggle ===
+(function(){
+  const toggle = document.getElementById('navToggle');
+  const links  = document.getElementById('navLinks');
+  if(!toggle || !links) return;
+
+  const currentPath=(location.pathname||'/').replace(/\/$/,'')||'/';
+  links.querySelectorAll('a[href]').forEach((link)=>{
+    if(link.classList.contains('call')) return;
+    const href=link.getAttribute('href');
+    try{
+      const linkPath=new URL(href, location.origin).pathname.replace(/\/$/,'')||'/';
+      if(linkPath===currentPath){ link.setAttribute('aria-current','page'); }
+      else { link.removeAttribute('aria-current'); }
+    }catch(_){ link.removeAttribute('aria-current'); }
+  });
+
+  function setOpen(open){
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    links.classList.toggle('open', open);
+    document.body.classList.toggle('nav-open', open);
+  }
+  toggle.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    setOpen(!isOpen);
+  });
+  links.addEventListener('click', (event) => {
+    const target = event.target;
+    if(target instanceof HTMLElement && target.tagName === 'A'){ setOpen(false); }
+  });
+  document.addEventListener('click', (event) => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    if(!isOpen) return;
+    if(event.target instanceof Node && !links.contains(event.target) && event.target !== toggle){ setOpen(false); }
+  });
+  document.addEventListener('keydown', (event) => { if(event.key === 'Escape'){ setOpen(false); } });
+  window.matchMedia('(min-width: 901px)').addEventListener('change', (mq) => { if(mq.matches){ setOpen(false); } });
+
+  const siteNav = document.querySelector('.site-nav');
+  if(siteNav){
+    let rafId = 0;
+    const syncHeaderOffset = () => {
+      rafId = 0;
+      const h = Math.round(siteNav.getBoundingClientRect().height);
+      if(h > 0) document.documentElement.style.setProperty('--header-h', (h + 12) + 'px');
+    };
+    const scheduleHeaderOffset = () => { if(!rafId) rafId = requestAnimationFrame(syncHeaderOffset); };
+    scheduleHeaderOffset();
+    window.addEventListener('resize', scheduleHeaderOffset);
+    window.addEventListener('load', scheduleHeaderOffset);
+  }
+})();
+
+const steps = [
+  function mountDebtAmount($){ $.innerHTML = `
+    <div class="prompt">About how much debt are you looking to roll into one payment?</div>
+    <div class="range">
+      <input id="rngDebt" type="range" min="0" max="4" step="1" value="1" />
+      <div class="range-labels"><span>Under $10k</span><span>$10–20k</span><span>$20–40k</span><span>$40–60k</span><span>$60k+</span></div>
+    </div>
+    <div class="controls"><button class="next" id="next">Next</button></div>`;
+    document.getElementById('next').onclick = ()=>{ const v = +document.getElementById('rngDebt').value; state.answers.debt_amount = ["<10k","10-20k","20-40k","40-60k",">60k"][v]; advance(); } },
+  function mountDebtType($){ $.innerHTML = `
+    <div class="prompt">Which debts do you want to combine into one simpler payment?</div>
+    <div class="choices" id="choices"></div>
+    <div class="controls"><button class="next" id="next" disabled>Next</button></div>`;
+    const items = ["Credit cards","Personal loans","Medical bills","Other unsecured debt"]; const sel = new Set(); const box = document.getElementById('choices'); const nextBtn = document.getElementById('next');
+    items.forEach(label=>{ const el = document.createElement('div'); el.className = 'choice'; el.textContent = label; el.onclick = ()=>{ if(sel.has(label)){ sel.delete(label); el.classList.remove('active'); } else { sel.add(label); el.classList.add('active'); } nextBtn.disabled = sel.size===0; }; box.appendChild(el); });
+    nextBtn.onclick = ()=>{ state.answers.debt_type = Array.from(sel); advance(); } },
+  function mountPayCredit($){ $.innerHTML = `
+    <div class="prompt">Are you mostly keeping up with payments, or have you missed some?</div>
+    <div class="choices" id="pay"></div>
+    <div class="prompt" style="margin-top:18px">If you know your credit score, which range sounds about right?</div>
+    <div class="choices" id="cred"></div>
+    <div class="controls"><button class="next" id="next">Next</button></div>`;
+    const pay = ["I'm current on payments","Missed 1–2 months","3+ months behind"], cred = ["720+","660–719","600–659","Below 600","Not sure"]; let payPick=null, credPick=null;
+    function radio(id, items, on){ const box = document.getElementById(id); items.forEach(label=>{ const el = document.createElement('div'); el.className='choice'; el.textContent=label; el.onclick=()=>{ Array.from(box.children).forEach(c=>c.classList.remove('active')); el.classList.add('active'); on(label); }; box.appendChild(el); }); }
+    radio('pay', pay, v=> payPick=v); radio('cred', cred, v=> credPick=v);
+    document.getElementById('next').onclick = ()=>{ state.answers.payment_status = payPick; state.answers.credit_band = credPick; advance(); } },
+  function mountState($){ $.innerHTML = `
+    <div class="prompt">Where do you live?</div>
+    <select id="selState" required></select>
+    <div class="controls"><button class="next" id="next">Next</button></div>`;
+    const states = ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"];
+    const sel = document.getElementById('selState'); sel.innerHTML = '<option value="" disabled selected>Select your state</option>' + states.map(s=>`<option>${s}</option>`).join('');
+    document.getElementById('next').onclick = ()=>{ state.answers.state = sel.value || null; showLeadGate(); } }
+];
+
+const entry = document.getElementById('entry'); const survey = document.getElementById('survey'); const mount = document.getElementById('stepMount'); const stepLabel = document.getElementById('stepLabel'); const bar = document.getElementById('progressBar'); const leadGate = document.getElementById('leadGate'); const results = document.getElementById('results');
+const BASE_UTM = Object.keys(UTM_PARAMS).length ? UTM_PARAMS : undefined;
+
+const startBtn = document.getElementById('startBtn');
+const callCta = document.getElementById('callCta');
+const stickyCall = document.getElementById('stickyCall');
+
+startBtn.addEventListener('click', ()=>{ startSurvey(); });
+function startSurvey(){ entry.classList.add('hidden'); survey.classList.remove('hidden'); state.step = 0;
+  updateProgress(); steps[state.step](mount); document.getElementById('form_ts').value = Date.now().toString(); }
+function advance(){ state.step++;
+  if(state.step < steps.length){ updateProgress(); steps[state.step](mount);} else { showLeadGate(); } }
+function updateProgress(){ const total = steps.length; const n = state.step + 1; stepLabel.textContent = `Step ${n} of ${total}`; bar.style.width = `${(n/total)*100}%`; }
+function showLeadGate(){ survey.classList.add('hidden'); leadGate.classList.remove('hidden'); }
+
+// Lead submit -> 036 router
+const form = document.getElementById('leadForm');
+const statusEl = document.getElementById('leadStatus');
+const DEBT_RANGE_MAP = { "<10k": 8000, "10-20k":15000, "20-40k":30000, "40-60k":50000, ">60k":70000 };
+
+function setStatus(message, mode = 'info'){
+  if(!statusEl) return;
+  statusEl.textContent = message || '';
+  statusEl.classList.toggle('hidden', !message);
+  statusEl.dataset.mode = mode;
+}
+
+async function submitLead(payload){
+  const res = await fetch(CONFIG.LEAD_ENDPOINT, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  let data = null;
+  try { data = await res.json(); } catch(err){ console.warn('Lead router response parse error', err); }
+  if(!res.ok){ const reason = data?.reason || data?.error || `HTTP ${res.status}`; throw new Error(reason); }
+  return data;
+}
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const submitBtn = form.querySelector('button[type="submit"]');
+  submitBtn?.setAttribute('disabled', 'true');
+  setStatus('Submitting your details securely...');
+  const fd = new FormData(form);
+  const phone = (fd.get('phone')||'').toString().replace(/[^\d+]/g,'');
+  const marketingValue = fd.get('consent_marketing');
+  const marketingOptIn = typeof marketingValue === 'string'
+    ? ['on', 'yes', 'true', '1'].includes(marketingValue.toLowerCase())
+    : false;
+  const consent = {
+    terms: fd.get('consent_terms') === 'on',
+    marketing: marketingOptIn,
+    timestamp: new Date().toISOString(),
+    disclosure_version: '2026-07-gdh-homepage-v1'
+  };
+  const { state: stateAnswer, debt_amount: debtRange, ...restAnswers } = state.answers;
+  const debtAmount = DEBT_RANGE_MAP[debtRange] || null;
+  const payload = {
+    name: (fd.get('first')||'').toString().trim(),
+    email: (fd.get('email')||'').toString().trim(),
+    phone,
+    zip: (fd.get('zip')||'').toString().trim(),
+    source: CONFIG.SITE_TAG,
+    hp: (fd.get('hp')||'').toString(),
+    form_ts: Number(fd.get('form_ts')||Date.now()),
+    state: stateAnswer || null,
+    debt_amount: debtAmount,
+    meta: (() => {
+      const meta = {
+        entrypoint: 'home_survey',
+        site_tag: CONFIG.SITE_TAG,
+        landing: LANDING_CONTEXT,
+        survey: { ...restAnswers, debt_amount_range: debtRange || null, state: stateAnswer || null }
+      };
+      if (BASE_UTM) { meta.utm_snapshot = BASE_UTM; }
+      return meta;
+    })(),
+    utm: BASE_UTM,
+    consent
+  };
+  try {
+    const res = await submitLead(payload);
+    const status = res?.status || 'accepted';
+    if(status === 'accepted' || status === 'duplicate'){ setStatus(''); showResults(); }
+    else if (status === 'limited') { setStatus('We received your request but are temporarily limiting submissions. Please try again shortly.', 'warn'); }
+    else { const reason = res?.reason || 'Your request could not be completed. Please call us to finish your review.'; setStatus(reason, 'error'); }
+  } catch(err){
+    console.error('Lead router submission failed', err);
+    setStatus('We could not submit your details. Please check your connection and try again.', 'error');
+  } finally {
+    submitBtn?.removeAttribute('disabled');
+  }
+});
+
+function showResults(){ leadGate.classList.add('hidden'); results.classList.remove('hidden'); const debtNum = DEBT_RANGE_MAP[state.answers.debt_amount] || 15000; document.getElementById('calcDebt').textContent = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(debtNum); const apr=0.17, termMonths=60, rate=apr/12; const pmt=(debtNum*rate)/(1-Math.pow(1+rate,-termMonths)); const low=Math.round(pmt*0.75), high=Math.round(pmt*1.05); document.getElementById('calcPayment').textContent = `${fmt(low)} – ${fmt(high)}`; const telHref = `tel:${CONFIG.CALL_NUMBER.replace(/[^\d+]/g,'')}`; if(callCta){ callCta.setAttribute('href', telHref); } if(stickyCall){ stickyCall.setAttribute('href', telHref); } }
+function fmt(n){ return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n); }
+document.getElementById('doneBtn').onclick = ()=>{ results.classList.add('hidden'); entry.classList.remove('hidden'); };
+document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
