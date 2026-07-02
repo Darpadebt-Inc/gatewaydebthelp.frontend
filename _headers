@@ -33,3 +33,27 @@
 
 /*.ico
   Cache-Control: public, max-age=31536000, immutable
+
+# Blog JSON list should never be cached between requests
+/blogs.json
+  Cache-Control: no-store, must-revalidate
+  Content-Type: application/json; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, OPTIONS
+
+/blog.index.html
+  Cache-Control: no-cache, must-revalidate
+
+# All generated blog HTML should be publicly cacheable but CORS-accessible
+/blog/*.html
+  Cache-Control: public, max-age=600
+  Vary: Accept, Origin
+  Access-Control-Allow-Origin: *
+
+# Blog folder (covers generated HTML + assets in /blog)
+/blog/*
+  Cache-Control: public, max-age=300
+  Access-Control-Allow-Origin: *
+
+/content/blog/*
+  Cache-Control: public, max-age=300
