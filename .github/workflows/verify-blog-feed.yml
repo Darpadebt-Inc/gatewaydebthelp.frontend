@@ -29,3 +29,7 @@ jobs:
           node-version: '22'
       - name: Verify blog feed
         run: node scripts/verify-blog-feed.mjs
+      - name: Check blog structure (033 commit contract)
+        run: node scripts/check-blog-structure.mjs
+      - name: Check blog readiness (033 commit prerequisites)
+        run: node scripts/check-blog-ready.mjs
