@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <title>Loading article… | Gateway Debt Help</title>
+  <meta name="description" content="Loading blog article">
+  <link rel="canonical" href="https://gatewaydebthelp.com/blog/" />
+  <meta name="theme-color" content="#0369a1" />
+  <link rel="icon" type="image/svg+xml" href="/gatewaylego.svg" />
+  <style>
+    :root {
+      --bg:#0b1220; --ink:#e6ecf8; --muted:#9fb1d6; --border:#1f2937; --brand:#0369a1;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+    main{max-width:720px;margin:0 auto;padding:72px 16px;text-align:center}
+    h1{margin:0 0 8px;font-size:1.8rem}
+    p{color:var(--muted)}
+    .spinner{width:32px;height:32px;border:4px solid rgba(255,255,255,.12);border-top-color:var(--brand);border-radius:50%;margin:22px auto;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    a{color:#cfe0ff}
+  </style>
+  <!-- TODO(marketing): insert Bing UET / Meta Pixel tags once ad-account IDs are provisioned for gatewaydebthelp.com -->
+</head>
+<body>
+  <main>
+    <div class="spinner" aria-hidden="true"></div>
+    <h1 aria-live="polite" id="statusText">Loading article…</h1>
+    <p id="helperText">Redirecting you to the published blog post.</p>
+    <p><a href="/blog/">← Browse all Gateway Debt Help articles</a></p>
+  </main>
+  <script>
+    (async function(){
+      const statusEl = document.getElementById('statusText');
+      const helperEl = document.getElementById('helperText');
+
+      const fail = (msg) => {
+        statusEl.textContent = 'Article not found';
+        helperEl.textContent = msg || 'We could not find this article. Please return to the blog list.';
+      };
+
+      const path = location.pathname || '';
+      const extractSlug = (value) => {
+        if (!value || typeof value !== 'string') return '';
+        const trimmed = value.trim();
+        if (!trimmed) return '';
+        const stripHash = trimmed.replace(/^#+/, '');
+        const normalized = stripHash.startsWith('/') ? stripHash : `/${stripHash}`;
+        const fromUrl = (() => {
+          try {
+            return new URL(trimmed, location.origin).pathname || normalized;
+          } catch (_) {
+            return normalized;
+          }
+        })();
+        const withoutHtml = fromUrl.replace(/\.html$/i, '');
+        const withoutLeading = withoutHtml.replace(/^\/+/, '');
+        if (!withoutLeading) return '';
+        if (withoutLeading.toLowerCase().startsWith('blog/')) {
+          const cleaned = withoutLeading.slice('blog/'.length);
+          return cleaned.replace(/\/index$/i, '').trim();
+        }
+        if (/^blog-shell$/i.test(withoutLeading)) return '';
+        if (!withoutLeading.includes('/')) {
+          return withoutLeading.trim();
+        }
+        return '';
+      };
+
+      const slug = (() => {
+        const fromPath = extractSlug(path);
+        if (fromPath) return fromPath;
+        const params = new URLSearchParams(location.search || '');
+        const queryKeys = ['slug', 'article', 'path', 'url', 'content_url'];
+        for (const key of queryKeys) {
+          const candidate = extractSlug(params.get(key) || '');
+          if (candidate) return candidate;
+        }
+        return extractSlug(location.hash || '');
+      })();
+
+      if (slug && !path.toLowerCase().startsWith('/blog/')) {
+        const canonical = `/blog/${slug.replace(/\.html$/i, '')}.html`;
+        try {
+          history.replaceState(null, '', canonical);
+        } catch (_) {
+          /* ignore */
+        }
+      }
+
+      if (!slug) {
+        fail('Invalid article path.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/blogs.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('list fetch failed');
+        const list = await response.json();
+        if (!Array.isArray(list)) throw new Error('invalid blog list');
+
+        const match = list.find((entry) => {
+          if (!entry || typeof entry !== 'object') return false;
+          const entrySlug = typeof entry.slug === 'string' ? entry.slug.trim() : '';
+          const normalizedSlug = entrySlug.replace(/^20\d{2}-\d{2}-\d{2}-/, '');
+          const incoming = slug.replace(/^20\d{2}-\d{2}-\d{2}-/, '');
+          return entrySlug === slug || normalizedSlug === incoming;
+        });
+
+        const contentUrl = typeof match?.content_url === 'string' ? match.content_url.trim() : '';
+        if (!contentUrl) {
+          fail('This article is missing its published link.');
+          return;
+        }
+
+        const target = (() => {
+          try {
+            const u = new URL(contentUrl, location.origin);
+            return u.pathname + u.search + u.hash;
+          } catch (_) {
+            return contentUrl;
+          }
+        })();
+
+        const normalizedTarget = (() => {
+          try {
+            const u = new URL(target, location.origin);
+            return u.pathname + u.search + u.hash;
+          } catch (_) {
+            return target;
+          }
+        })();
+
+        const current = location.pathname + location.search + location.hash;
+        if (!normalizedTarget || normalizedTarget === current || /\/blog-shell\.html$/i.test(normalizedTarget)) {
+          fail('This article link looks misconfigured. Please return to the blog list.');
+          return;
+        }
+
+        helperEl.textContent = 'Redirecting to the published version…';
+        location.replace(normalizedTarget);
+      } catch (err) {
+        fail('We ran into a problem loading the article. Please try again.');
+      }
+    })();
+  </script>
+</body>
+</html>

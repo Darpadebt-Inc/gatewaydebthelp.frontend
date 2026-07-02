@@ -8,41 +8,52 @@
 ##### ALLOW — Search + AI + Social Preview
 User-agent: Googlebot
 Allow: /
+Allow: /blog/
 Disallow: /admin/
 Disallow: /api/private/
 Disallow: /__internal/
 
 User-agent: Google-InspectionTool
 Allow: /
+Allow: /blog/
 
 User-agent: GoogleOther
 Allow: /
+Allow: /blog/
 
 User-agent: AdsBot-Google
 Allow: /
+Allow: /blog/
 
 User-agent: bingbot
 Allow: /
+Allow: /blog/
 
 # AI crawlers
 User-agent: ChatGPT-User
 Allow: /
+Allow: /blog/
 
 User-agent: GPTBot
 Allow: /
+Allow: /blog/
 
 User-agent: ClaudeBot
 Allow: /
+Allow: /blog/
 
 # Social/link preview
 User-agent: facebookexternalhit
 Allow: /
+Allow: /blog/
 
 User-agent: Twitterbot
 Allow: /
+Allow: /blog/
 
 User-agent: LinkedInBot
 Allow: /
+Allow: /blog/
 
 ##### DISALLOW — High-risk scrapers, mirrors, or unwanted collectors
 User-agent: Applebot
@@ -92,6 +103,7 @@ Disallow: /
 
 ##### DEFAULT — Block unknown/generic bots
 User-agent: *
+Allow: /blog/
 Disallow: /
 
 ##### SITEMAP
