@@ -2,9 +2,9 @@
 # Content-Security-Policy is deployed in Report-Only mode first: it captures violations
 # without blocking any revenue-critical payload, so lead-gen uptime is unaffected while
 # the allowlist is validated against real traffic. This site loads no external scripts
-# beyond Bing UET (bat.bing.com) and its own lead-router API, so the allowlist is minimal.
+# beyond its own lead-router API, so the allowlist is minimal.
 /*
-  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self' 'unsafe-inline' https://bat.bing.com; connect-src 'self' https://bat.bing.com; form-action 'self'; upgrade-insecure-requests
+  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'self'; form-action 'self'; upgrade-insecure-requests
   X-Content-Type-Options: nosniff
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Frame-Options: DENY
