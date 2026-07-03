@@ -24,3 +24,15 @@
 /blog/what-to-know-before-requesting-credit-card-hardship-programs /blog/2026-03-29-what-to-know-before-requesting-credit-card-hardship-programs.html 301
 /blog/credit-card-hardship-programs-your-debt-relief-guide /blog/2026-03-28-credit-card-hardship-programs-your-debt-relief-guide.html 301
 /blog/how-to-set-up-a-hardship-payment-plan /blog/2026-06-30-how-to-set-up-a-hardship-payment-plan.html 301
+
+# Removed non-owned topic pages -> 301 to owning sister site
+/debt-settlement.html          https://debthelpform.com/debt-settlement.html             301
+/debt-settlement               https://debthelpform.com/debt-settlement.html             301
+/debt-consolidation.html       https://debthelpform.com/debt-consolidation.html          301
+/debt-consolidation            https://debthelpform.com/debt-consolidation.html          301
+/bankruptcy-alternatives.html  https://debtreliefguard.com/learn/bankruptcy-alternatives 301
+/bankruptcy-alternatives       https://debtreliefguard.com/learn/bankruptcy-alternatives 301
+/scams-compliance.html         https://debtreliefguard.com/learn/scams-compliance        301
+/scams-compliance              https://debtreliefguard.com/learn/scams-compliance        301
+/debt-validation-rights.html   https://debtreliefguard.com/learn/lawsuits-collections/   301
+/debt-validation-rights        https://debtreliefguard.com/learn/lawsuits-collections/   301
