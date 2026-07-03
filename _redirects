@@ -20,3 +20,7 @@
 # Legacy paths → new location
 /content/blog/:year-:month-:day-:rest                 /blog/:year-:month-:day-:rest.html                     301
 /content/blog/:splat                                  /blog/:splat                                           301
+
+/blog/what-to-know-before-requesting-credit-card-hardship-programs /blog/2026-03-29-what-to-know-before-requesting-credit-card-hardship-programs.html 301
+/blog/credit-card-hardship-programs-your-debt-relief-guide /blog/2026-03-28-credit-card-hardship-programs-your-debt-relief-guide.html 301
+/blog/how-to-set-up-a-hardship-payment-plan /blog/2026-06-30-how-to-set-up-a-hardship-payment-plan.html 301
