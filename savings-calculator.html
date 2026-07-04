@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Credit Card Hardship Relief Calculator | Gateway Debt Help</title>
+<meta name="description" content="Estimate a lower monthly payment and interest saved with a credit card hardship plan or debt management plan. No hard credit check — estimates are examples only." />
+<meta name="robots" content="index,follow,max-image-preview:large" />
+<link rel="canonical" href="https://gatewaydebthelp.com/savings-calculator.html" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Credit Card Hardship Relief Calculator | Gateway Debt Help" />
+<meta property="og:description" content="Estimate a lower monthly payment and the interest you could save through a credit card hardship plan or a debt management plan. Free tool — estimates are examples only." />
+<meta property="og:url" content="https://gatewaydebthelp.com/savings-calculator.html" />
+<meta property="og:site_name" content="Gateway Debt Help" />
+<meta property="og:image" content="https://gatewaydebthelp.com/gatewaylego.svg" />
+<meta property="og:image:type" content="image/svg+xml" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Credit Card Hardship Relief Calculator | Gateway Debt Help" />
+<meta name="twitter:description" content="Estimate a lower monthly payment and interest saved through a credit card hardship plan or debt management plan. No hard credit check — estimates are examples only." />
+<meta name="theme-color" content="#0369a1" />
+<link rel="icon" type="image/svg+xml" href="/gatewaylego.svg" />
+<link rel="apple-touch-icon" href="/gatewaylego.svg" />
+<link rel="stylesheet" href="/shared.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://gatewaydebthelp.com/#website","url":"https://gatewaydebthelp.com/","name":"Gateway Debt Help","publisher":{"@id":"https://gatewaydebthelp.com/#gfsr"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["Organization","FinancialService"],"@id":"https://gatewaydebthelp.com/#gfsr","name":"Gateway Financial Settlement Relief, LLC","alternateName":["GFSR","Gateway Debt Help"],"url":"https://gatewaydebthelp.com/","telephone":"+1-888-437-7141","sameAs":["https://gatewaydebthelp.com/"],"disambiguatingDescription":"Not affiliated with Gateway Debt Relief of Costa Mesa, CA."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://gatewaydebthelp.com/"},{"@type":"ListItem","position":2,"name":"Hardship Relief Calculator","item":"https://gatewaydebthelp.com/savings-calculator.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Credit Card Hardship Relief Calculator","url":"https://gatewaydebthelp.com/savings-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any (web browser)","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@id":"https://gatewaydebthelp.com/#gfsr"},"about":"Estimator for credit card hardship plan payments and debt management plan repayment."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this hardship relief calculator a real offer?","acceptedAnswer":{"@type":"Answer","text":"No. It is an educational estimator that uses standard payment math to illustrate how a reduced interest rate could change your monthly card payment and total interest. Actual terms depend on your card issuer or counseling agency reviewing your account, and results vary."}},{"@type":"Question","name":"How does a credit card hardship plan lower my payment?","acceptedAnswer":{"@type":"Answer","text":"When a card issuer approves a hardship arrangement, it often reduces the interest rate on your account for a set period and may pause or waive certain fees. A lower rate means more of each payment goes to principal, which can reduce the monthly amount needed to clear the balance over a chosen timeframe."}},{"@type":"Question","name":"What is the difference between hardship relief and a debt management plan?","acceptedAnswer":{"@type":"Answer","text":"Hardship relief is arranged directly with a single card issuer. A debt management plan is administered by a credit counseling agency that collects one monthly payment and distributes it to several enrolled creditors, often at reduced rates. Both repay what you owe in full at better terms rather than reducing the balance itself."}},{"@type":"Question","name":"Will using this calculator affect my credit score?","acceptedAnswer":{"@type":"Answer","text":"No. The calculator runs entirely in your browser, asks for no personal identifiers, and performs no credit check. Nothing you type is required to submit and it does not create an application."}},{"@type":"Question","name":"Does a debt management plan reduce the amount I owe?","acceptedAnswer":{"@type":"Answer","text":"No. A debt management plan repays your balances in full. The savings come from reduced interest rates and waived fees that creditors may grant, plus the simplicity of one monthly payment, not from shrinking the principal balance."}}]}</script>
+<!-- TODO(marketing): insert Bing UET / Meta Pixel tags once ad-account IDs are provisioned for gatewaydebthelp.com -->
+<style>
+/* Calculator-specific layer — uses shared.css tokens only */
+.calc-cols{display:grid;grid-template-columns:1fr;gap:16px;margin-top:8px}
+@media (min-width:900px){.calc-cols{grid-template-columns:1fr 1fr}}
+.calc-card{background:#fff}
+.calc-card h2{margin-top:0}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.calc-grid{grid-template-columns:1fr}}
+.calc-out{background:#f8fafc;border:1px dashed #94a3b8;border-radius:12px;padding:14px;margin-top:14px;min-height:20px}
+.calc-out .big{display:block;font-size:22px;font-weight:800;color:var(--navy);line-height:1.2}
+.calc-out .save{color:var(--cta-700);font-weight:800}
+.calc-out hr{border:none;border-top:1px dashed #cbd5e1;margin:10px 0}
+.calc-out .line{margin:4px 0}
+.micro{font-size:13px;color:var(--muted)}
+.disclaimer{font-size:12px;color:#64748b;margin-top:10px;line-height:1.5}
+.hp-field{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.calc-btn{margin-top:14px}
+</style>
+</head>
+<body>
+<div class="shell">
+  <nav class="site-nav" role="navigation" aria-label="Primary">
+    <a class="brand" href="/" aria-label="Gateway Debt Help home">
+      <img src="/images/gateway-logo-header.svg" alt="Gateway Debt Help logo" width="997" height="680" decoding="async" />
+    </a>
+    <button class="menu-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <div class="links" id="navLinks">
+      <a href="/credit-card-relief.html">Hardship Relief</a>
+      <a href="/credit-counseling.html">Credit Counseling</a>
+      <a href="/credit-rebuild.html">Credit Rebuild</a>
+      <a href="/state-rules.html">State Rules</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/blog/">Blog</a>
+      <a class="call" href="tel:+18884377141">Call +1 (888) 437-7141</a>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <h1>Credit Card Hardship &amp; Payment Relief Calculator</h1>
+    <p>See how much a lower interest rate could change your monthly credit card payment. These two estimators model a card issuer <strong>hardship plan</strong> and a counseling <strong>debt management plan</strong>, so you can compare a realistic payment against what you may pay staying on your current rate. Educational estimates only — no hard credit check.</p>
+    <div class="controls" style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn primary" href="/#leadForm">Start the 60-second check</a>
+      <a class="btn ghost" href="tel:+18884377141">Call +1 (888) 437-7141</a>
+    </div>
+  </header>
+
+  <div class="card pad" aria-label="Trust signals" style="margin:14px auto;max-width:var(--max)">
+    <div class="muted" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <a href="https://www.bbb.org/us/fl/inglis/profile/debt-relief-services/gateway-financial-settlement-relief-llc-0733-235973278" target="_blank" rel="noopener nofollow" class="badge">BBB Profile — A– rating</a>
+      <span class="badge">FTC-aligned • No upfront fees</span>
+      <span class="badge">No hard credit check to estimate</span>
+      <span class="badge">Secure &amp; confidential</span>
+    </div>
+  </div>
+
+  <nav class="toc container" aria-label="On this page">
+    <strong style="display:block;margin-bottom:6px;color:var(--navy)">On this page</strong>
+      <a href="#how">How this estimator works</a>
+      <a href="#hardship">Hardship rate relief estimator</a>
+      <a href="#dmp">Debt management plan estimator</a>
+      <a href="#compare">Hardship relief vs. a debt management plan</a>
+      <a href="#variables">What can change your real numbers</a>
+      <a href="#faq">Frequently asked questions</a>
+  </nav>
+
+  <section class="section container prose">
+    <section id="how">
+      <h2>How this credit card relief estimator works</h2>
+      <p>Both calculators below use the same standard amortization math a lender or counseling agency would use: given a balance, an interest rate, and a repayment length, they solve for the level monthly payment that clears the balance. The only thing that changes between "current rate" and "relief plan" is the interest rate applied — because a lower rate is exactly what a <a href="/credit-card-relief.html">credit card hardship program</a> or a counseling <a href="/credit-counseling.html">debt management plan</a> is designed to secure.</p>
+      <p>Nothing here is an application, a quote, or a promise of approval. The numbers are examples to help you picture the shape of a plan before you talk to anyone. Your real rate, term, and monthly amount depend on your issuer or agency reviewing your account.</p>
+    </section>
+
+    <div class="calc-cols">
+      <!-- CALCULATOR 1: HARDSHIP RATE RELIEF -->
+      <article class="card pad calc-card" id="hardship" aria-labelledby="hardship-h">
+        <h2 id="hardship-h">Hardship rate relief: estimate your lower payment</h2>
+        <p class="micro">When a card issuer approves a hardship arrangement, it commonly lowers your interest rate for a set period. Enter one card to see how the reduced rate could change the monthly payment and the interest paid over the plan.</p>
+        <form id="hardForm" novalidate>
+          <input type="text" name="hp" id="hpHard" class="hp-field" autocomplete="off" aria-hidden="true" tabindex="-1" />
+          <div class="calc-grid">
+            <div>
+              <label for="hr_balance">Card balance</label>
+              <input id="hr_balance" type="number" min="0" step="0.01" placeholder="e.g., 6500" required />
+            </div>
+            <div>
+              <label for="hr_apr">Current APR (%)</label>
+              <input id="hr_apr" type="number" min="0" step="0.01" placeholder="e.g., 24.99" value="24.99" required />
+            </div>
+          </div>
+          <div class="calc-grid">
+            <div>
+              <label for="hr_hardship_apr">Hardship-plan APR (%)</label>
+              <input id="hr_hardship_apr" type="number" min="0" step="0.01" placeholder="e.g., 9.9" value="9.9" required />
+            </div>
+            <div>
+              <label for="hr_term">Repayment length</label>
+              <select id="hr_term" required>
+                <option value="24">24 months</option>
+                <option value="36" selected>36 months</option>
+                <option value="48">48 months</option>
+                <option value="60">60 months</option>
+              </select>
+            </div>
+          </div>
+          <p class="calc-btn"><button class="btn primary" type="button" id="calcHardBtn">Estimate my hardship payment</button></p>
+        </form>
+        <div class="calc-out" id="hard_out" aria-live="polite"><span class="micro">Your estimate will appear here.</span></div>
+        <p class="disclaimer">Estimates are examples only, not an offer or approval. Hardship rates, terms, and fee waivers are set by your card issuer based on your account and circumstances. Using this tool involves no hard credit check.</p>
+      </article>
+
+      <!-- CALCULATOR 2: DEBT MANAGEMENT PLAN -->
+      <article class="card pad calc-card" id="dmp" aria-labelledby="dmp-h">
+        <h2 id="dmp-h">Debt management plan: payment and interest saved</h2>
+        <p class="micro">A debt management plan through a credit counseling agency gathers your enrolled card balances into one monthly payment, often at reduced creditor rates. This compares that plan against staying on minimum payments at your current rate.</p>
+        <form id="dmpForm" novalidate>
+          <input type="text" name="hp" id="hpDmp" class="hp-field" autocomplete="off" aria-hidden="true" tabindex="-1" />
+          <div class="calc-grid">
+            <div>
+              <label for="dmp_debt">Total card balances</label>
+              <input id="dmp_debt" type="number" min="0" step="0.01" placeholder="e.g., 14000" required />
+            </div>
+            <div>
+              <label for="dmp_apr">Current blended APR (%)</label>
+              <input id="dmp_apr" type="number" min="0" step="0.01" placeholder="e.g., 22.99" value="22.99" required />
+            </div>
+          </div>
+          <div class="calc-grid">
+            <div>
+              <label for="dmp_minpct">Minimum payment (% of balance)</label>
+              <input id="dmp_minpct" type="number" min="1" max="5" step="0.1" value="2.5" required />
+            </div>
+            <div>
+              <label for="dmp_floor">Minimum payment floor ($)</label>
+              <input id="dmp_floor" type="number" min="0" step="1" value="25" required />
+            </div>
+          </div>
+          <div class="calc-grid">
+            <div>
+              <label for="dmp_plan_apr">Plan APR under counseling (%)</label>
+              <input id="dmp_plan_apr" type="number" min="0" step="0.01" placeholder="e.g., 8.0" value="8.0" required />
+            </div>
+            <div>
+              <label for="dmp_term">Plan length</label>
+              <select id="dmp_term" required>
+                <option value="36">36 months</option>
+                <option value="48" selected>48 months</option>
+                <option value="60">60 months</option>
+              </select>
+            </div>
+          </div>
+          <p class="calc-btn"><button class="btn primary" type="button" id="calcDmpBtn">Compare plan vs. minimums</button></p>
+        </form>
+        <div class="calc-out" id="dmp_out" aria-live="polite"><span class="micro">Your estimate will appear here.</span></div>
+        <p class="disclaimer">Educational estimate, not a promise of results. Which creditors participate, the rates they grant, and any agency fees vary by counseling agency and by state. Gateway Debt Help is not a credit counseling agency.</p>
+      </article>
+    </div>
+
+    <section id="compare">
+      <h2>Hardship relief vs. a debt management plan</h2>
+      <p>These two paths share a goal — a lower rate and a payment you can actually keep — but they work differently:</p>
+      <ul>
+        <li><strong>Credit card hardship relief</strong> is arranged directly with a single card issuer. It is often the fastest first step when one or two accounts are the problem and you are still close to current on payments.</li>
+        <li><strong>A debt management plan</strong> is run by a certified <a href="/credit-counseling.html">credit counseling</a> agency. You send one monthly payment to the agency, which distributes it to several enrolled creditors, frequently at reduced rates. It suits steady income with multiple strained cards.</li>
+      </ul>
+      <p>Neither reduces the principal you owe — both repay your balances in full at better terms. Once your accounts are back on track, a <a href="/credit-rebuild.html">credit rebuild plan</a> helps restore your score over the following year.</p>
+    </section>
+
+    <section id="variables">
+      <h2>What can change your real numbers</h2>
+      <p>Treat every figure above as a starting sketch. The estimate can move once real terms are set because of:</p>
+      <ul>
+        <li><strong>The rate you are actually granted.</strong> Hardship and plan APRs depend on the issuer, the account history, and the documented reason for hardship.</li>
+        <li><strong>Fees and waivers.</strong> Waived late fees or a paused annual fee change the total you repay; a small agency administration fee can offset part of the interest savings.</li>
+        <li><strong>Which accounts are enrolled.</strong> A plan covers only the cards you place in it, so leaving one out changes both the monthly payment and the interest math.</li>
+        <li><strong>Whether you keep charging.</strong> New purchases on an enrolled or hardship account undo the progress the lower rate is meant to create.</li>
+        <li><strong>Your state.</strong> Fee caps and disclosure rules differ by state — see our <a href="/state-rules.html">state rules guide</a> for why the same plan can cost differently across state lines.</li>
+      </ul>
+      <p>Want the full picture instead of an estimate? Our <a href="/faq.html">FAQ</a> answers the most common questions, or you can start the quick options check below.</p>
+    </section>
+
+    <section id="faq">
+      <h2>Frequently asked questions</h2>
+      <details>
+        <summary>Is this hardship relief calculator a real offer?</summary>
+        <p>No. It is an educational estimator that uses standard payment math to illustrate how a reduced interest rate could change your monthly card payment and total interest. Actual terms depend on your card issuer or counseling agency reviewing your account, and results vary.</p>
+      </details>
+      <details>
+        <summary>How does a credit card hardship plan lower my payment?</summary>
+        <p>When a card issuer approves a hardship arrangement, it often reduces the interest rate on your account for a set period and may pause or waive certain fees. A lower rate means more of each payment goes to principal, which can reduce the monthly amount needed to clear the balance over a chosen timeframe.</p>
+      </details>
+      <details>
+        <summary>What is the difference between hardship relief and a debt management plan?</summary>
+        <p>Hardship relief is arranged directly with a single card issuer. A debt management plan is administered by a credit counseling agency that collects one monthly payment and distributes it to several enrolled creditors, often at reduced rates. Both repay what you owe in full at better terms rather than reducing the balance itself.</p>
+      </details>
+      <details>
+        <summary>Will using this calculator affect my credit score?</summary>
+        <p>No. The calculator runs entirely in your browser, asks for no personal identifiers, and performs no credit check. Nothing you type is required to submit, and it does not create an application.</p>
+      </details>
+      <details>
+        <summary>Does a debt management plan reduce the amount I owe?</summary>
+        <p>No. A debt management plan repays your balances in full. The savings come from reduced interest rates and waived fees that creditors may grant, plus the simplicity of one monthly payment — not from shrinking the principal balance.</p>
+      </details>
+    </section>
+
+    <section>
+      <h2>Keep exploring your relief options</h2>
+      <div class="related-grid">
+        <a class="related-card" href="/credit-card-relief.html">
+          <div class="t">Credit Card Hardship Programs</div>
+          <p class="muted" style="margin:8px 0 0;font-size:14px">Relief negotiated directly with your own card issuer — often the fastest first step.</p>
+        </a>
+        <a class="related-card" href="/credit-counseling.html">
+          <div class="t">Credit Counseling &amp; DMPs</div>
+          <p class="muted" style="margin:8px 0 0;font-size:14px">How certified counselors structure one affordable payment across your cards.</p>
+        </a>
+        <a class="related-card" href="/credit-rebuild.html">
+          <div class="t">Rebuilding Your Credit</div>
+          <p class="muted" style="margin:8px 0 0;font-size:14px">Practical first-year steps to recover your score after credit card hardship.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="card cta-panel page-card" aria-label="Get started" style="text-align:center">
+      <h2 style="margin:0 0 10px;color:#fff">See which relief path fits — in about 60 seconds</h2>
+      <p class="muted" style="margin-top:0">Answer a few quick questions and we will follow up with credit card hardship, counseling, and credit-rebuild options tailored to you. Secure &amp; confidential. No obligation, no hard credit check.</p>
+      <div class="controls" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <a class="btn primary" href="/#leadForm">Start the 60-second check</a>
+        <a class="btn ghost" href="tel:+18884377141">Call +1 (888) 437-7141</a>
+      </div>
+    </section>
+  </section>
+
+</div>
+
+  <div class="footer-sticky">
+    <div class="trust">🔒 Secure &amp; Confidential</div>
+    <a class="callnow" id="stickyCall" href="tel:+18884377141">Call Now</a>
+  </div>
+
+  <footer style="border-top:1px solid var(--border);background:#fff;margin-top:18px">
+    <div class="container" style="padding-top:18px">
+      <nav aria-label="More pages" class="foot-links">
+      <a href="/credit-card-relief.html">Credit Card Hardship</a>
+      <a href="/credit-counseling.html">Credit Counseling</a>
+      <a href="/credit-rebuild.html">Credit Rebuild</a>
+      <a href="/state-rules.html">State Rules</a>
+      <a href="/about.html">About</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/blog/">Blog</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      </nav>
+      <div class="foot-copy">
+        © <span id="y"></span> GatewayDebtHelp.com — a service of Gateway Financial Settlement Relief, LLC (GFSR). Not affiliated with "Gateway Debt Relief" of Costa Mesa, CA or any other company.
+        <br />Debt settlement may negatively affect your credit and could involve tax consequences; results are not guaranteed and vary based on your circumstances. This is not a lender, law firm, or credit counseling agency, and nothing here is legal, tax, or financial advice.
+        <span style="margin-left:6px">•</span>
+        <a href="/privacy.html">Privacy</a>
+        <span>•</span>
+        <a href="/terms.html">Terms</a>
+        <span>•</span>
+        <a href="https://www.bbb.org/us/fl/inglis/profile/debt-relief-services/gateway-financial-settlement-relief-llc-0733-235973278" target="_blank" rel="noopener nofollow">BBB Profile (A–)</a>
+      </div>
+    </div>
+  </footer>
+  <script src="/eng038.sitewide.js" defer></script>
+  <script>
+  // === Responsive navigation toggle (GDH sitewide pattern) ===
+  (function(){
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    if(!toggle || !links) return;
+
+    const currentPath=(location.pathname||'/').replace(/\/$/,'')||'/';
+    links.querySelectorAll('a[href]').forEach((link)=>{
+      if(link.classList.contains('call')) return;
+      const href=link.getAttribute('href');
+      try{
+        const linkPath=new URL(href, location.origin).pathname.replace(/\/$/,'')||'/';
+        if(linkPath===currentPath){ link.setAttribute('aria-current','page'); }
+        else { link.removeAttribute('aria-current'); }
+      }catch(_){ link.removeAttribute('aria-current'); }
+    });
+
+    function setOpen(open){
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      links.classList.toggle('open', open);
+      document.body.classList.toggle('nav-open', open);
+    }
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      setOpen(!isOpen);
+    });
+    links.addEventListener('click', (event) => {
+      const target = event.target;
+      if(target instanceof HTMLElement && target.tagName === 'A'){ setOpen(false); }
+    });
+    document.addEventListener('click', (event) => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      if(!isOpen) return;
+      if(event.target instanceof Node && !links.contains(event.target) && event.target !== toggle){ setOpen(false); }
+    });
+    document.addEventListener('keydown', (event) => { if(event.key === 'Escape'){ setOpen(false); } });
+    window.matchMedia('(min-width: 901px)').addEventListener('change', (mq) => { if(mq.matches){ setOpen(false); } });
+
+    const siteNav = document.querySelector('.site-nav');
+    if(siteNav){
+      let rafId = 0;
+      const syncHeaderOffset = () => {
+        rafId = 0;
+        const h = Math.round(siteNav.getBoundingClientRect().height);
+        if(h > 0) document.documentElement.style.setProperty('--header-h', (h + 12) + 'px');
+      };
+      const scheduleHeaderOffset = () => { if(!rafId) rafId = requestAnimationFrame(syncHeaderOffset); };
+      scheduleHeaderOffset();
+      window.addEventListener('resize', scheduleHeaderOffset);
+      window.addEventListener('load', scheduleHeaderOffset);
+    }
+  })();
+  var __y = document.getElementById('y'); if(__y){ __y.textContent = new Date().getFullYear(); }
+  </script>
+  <script>
+  // === Hardship / counseling relief estimators (client-side only) ===
+  (function(){
+    const money0 = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+    const money2 = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2});
+
+    // Level payment that amortizes P over n months at annual rate aprPct: M = P*r / (1-(1+r)^-n)
+    function loanPayment(P, aprPct, n){
+      const r = (aprPct/100)/12;
+      if(n<=0) return 0;
+      if(r===0) return P/n;
+      return P * (r / (1 - Math.pow(1+r, -n)));
+    }
+
+    // Status-quo minimum-payment payoff simulator. Returns {months, totalPaid}.
+    function statusQuoPayoff(balance, aprPct, minPct, floor){
+      let b = balance, m = 0, total = 0;
+      const r = (aprPct/100)/12;
+      const minP = Math.max(0.001, minPct/100);
+      const maxMonths = 600; // guard
+      while(b > 0.009 && m < maxMonths){
+        const interest = b * r;
+        let pay = Math.max(b*minP, floor);
+        if(pay > b + interest) pay = b + interest; // final payment
+        // avoid negative amortization if minimum can't cover interest
+        if(pay <= interest + 0.01) pay = interest + 1;
+        const principal = pay - interest;
+        b = Math.max(0, b - principal);
+        total += pay;
+        m++;
+      }
+      return { months:m, totalPaid: total };
+    }
+
+    function nz(v){ return Number.isFinite(v) && v>=0; }
+    function botTrap(id){ const hp = document.getElementById(id); return !!(hp && hp.value); }
+
+    // ---- Calculator 1: Hardship rate relief ----
+    (function(){
+      const balance = document.getElementById('hr_balance');
+      const curApr  = document.getElementById('hr_apr');
+      const hardApr = document.getElementById('hr_hardship_apr');
+      const term    = document.getElementById('hr_term');
+      const out     = document.getElementById('hard_out');
+      const btn     = document.getElementById('calcHardBtn');
+      if(!btn) return;
+      btn.addEventListener('click', function(){
+        if(botTrap('hpHard')) return;
+        const P = parseFloat(balance.value);
+        const A = parseFloat(curApr.value);
+        const H = parseFloat(hardApr.value);
+        const n = parseInt(term.value, 10);
+        if(!nz(P) || P<=0 || !nz(A) || !nz(H) || !Number.isInteger(n) || n<=0){
+          out.innerHTML = '<span class="micro">Please enter a balance and valid interest rates.</span>';
+          return;
+        }
+        const payNow  = loanPayment(P, A, n);
+        const payPlan = loanPayment(P, H, n);
+        const intNow  = Math.max(0, payNow*n - P);
+        const intPlan = Math.max(0, payPlan*n - P);
+        const monthlyDrop = Math.max(0, payNow - payPlan);
+        const intSaved    = Math.max(0, intNow - intPlan);
+        out.innerHTML =
+          '<span class="big">' + money2.format(payPlan) + ' / mo</span>' +
+          '<div class="line micro">Estimated payment on a hardship-plan rate over ' + n + ' months.</div>' +
+          '<hr>' +
+          '<div class="line micro">On your current rate the payment would be about <strong>' + money2.format(payNow) + ' / mo</strong>.</div>' +
+          '<div class="line micro">Estimated monthly reduction: <span class="save">' + money2.format(monthlyDrop) + '</span></div>' +
+          '<div class="line micro">Estimated interest saved over the plan: <span class="save">' + money0.format(intSaved) + '</span> (about ' + money0.format(intNow) + ' vs. ' + money0.format(intPlan) + ').</div>';
+      });
+    })();
+
+    // ---- Calculator 2: Debt management plan vs. minimum payments ----
+    (function(){
+      const debt    = document.getElementById('dmp_debt');
+      const apr     = document.getElementById('dmp_apr');
+      const minpct  = document.getElementById('dmp_minpct');
+      const floor   = document.getElementById('dmp_floor');
+      const planApr = document.getElementById('dmp_plan_apr');
+      const term    = document.getElementById('dmp_term');
+      const out     = document.getElementById('dmp_out');
+      const btn     = document.getElementById('calcDmpBtn');
+      if(!btn) return;
+      btn.addEventListener('click', function(){
+        if(botTrap('hpDmp')) return;
+        const D  = parseFloat(debt.value);
+        const A  = parseFloat(apr.value);
+        const MP = parseFloat(minpct.value);
+        const F  = parseFloat(floor.value);
+        const PA = parseFloat(planApr.value);
+        const N  = parseInt(term.value, 10);
+        if(!nz(D) || D<=0 || !nz(A) || !nz(MP) || MP<=0 || !nz(F) || !nz(PA) || !Number.isInteger(N) || N<=0){
+          out.innerHTML = '<span class="micro">Please enter your balances and valid rates.</span>';
+          return;
+        }
+        const base = statusQuoPayoff(D, A, MP, F); // minimum-payment baseline
+        const planPay = loanPayment(D, PA, N);
+        const planTotal = planPay * N;
+        const totalSaved = Math.max(0, base.totalPaid - planTotal);
+        const savedPct = base.totalPaid>0 ? (totalSaved / base.totalPaid)*100 : 0;
+        const baseYears = (base.months/12);
+        out.innerHTML =
+          '<span class="big">' + money2.format(planPay) + ' / mo</span>' +
+          '<div class="line micro">Estimated single plan payment over ' + N + ' months (about ' + money0.format(planTotal) + ' total).</div>' +
+          '<hr>' +
+          '<div class="line micro">Paying only the minimum at ' + A + '% APR: about <strong>' + money0.format(base.totalPaid) + '</strong> over ~' + base.months + ' months (~' + baseYears.toFixed(1) + ' years).</div>' +
+          '<div class="line micro">Estimated total saved with the plan: <span class="save">' + money0.format(totalSaved) + '</span> (~' + savedPct.toFixed(1) + '%).</div>' +
+          '<div class="line micro">A debt management plan repays your balances in full — the savings come from the lower rate and one steady payment.</div>';
+      });
+    })();
+  })();
+  </script>
+</body>
+</html>
