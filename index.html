@@ -21,6 +21,63 @@
 <link rel="icon" type="image/svg+xml" href="/gatewaylego.svg" />
 <link rel="apple-touch-icon" href="/gatewaylego.svg" />
 <link rel="stylesheet" href="/shared.css" />
+<style>
+/* === Lead-form components (GFSR survey model, ported from the shared DRG form) ===
+   GDH keeps /shared.css for site chrome; these rules render the 2-step options-check form. */
+.card.survey-highlight {
+  background: linear-gradient(135deg,#0ea5e9,#38bdf8 55%,#22c55e);
+  color: #fff;
+  border: none;
+  box-shadow: 0 18px 46px rgba(3,105,161,.16);
+}
+.card.survey-highlight .survey-title,
+.card.survey-highlight h1,
+.card.survey-highlight h2,
+.card.survey-highlight label { color: #fff; }
+.card.survey-highlight p,
+.card.survey-highlight .legal,
+.card.survey-highlight .small,
+.card.survey-highlight .muted { color: rgba(255,255,255,.9); }
+.card.survey-highlight a { color: #fff; text-decoration: underline; }
+.card.survey-highlight .btn.primary,
+.card.survey-highlight #nextBtn,
+.card.survey-highlight #submitBtn { background: rgba(15,23,42,.92); box-shadow: 0 8px 18px rgba(15,23,42,.35); color:#fff; }
+.card.survey-highlight .step { background: rgba(255,255,255,.35); }
+.card.survey-highlight .chip { color:#0f172a; }
+
+.steps { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
+.step { flex: 1; height: 8px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
+.step > span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--brand), var(--brand-600)); transition: width .35s ease; }
+
+label { font-size: 14px; font-weight: 600; display: block; margin: 12px 0 6px; }
+input, select { width: 100%; padding: 12px 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 16px; outline: none; background: white; }
+input:focus, select:focus { border-color: var(--brand-600); box-shadow: 0 0 0 4px var(--ring); }
+
+.choices { display:flex; flex-wrap:wrap; gap:10px; }
+.chip { display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border:1px solid #cbd5e1; border-radius:999px; cursor:pointer; user-select:none; background:#fff; }
+.chip[aria-pressed="true"], .chip input:checked + span { border-color: var(--brand-600); box-shadow: 0 0 0 3px var(--ring); }
+.chip input { display:none; }
+
+.row { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 640px) { .row.two { grid-template-columns: 1fr 1fr; } }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; padding: 12px 18px; border-radius: 999px; border: none; font-weight: 700; }
+.btn.primary { background: linear-gradient(90deg, var(--cta), var(--cta-700)); color: #fff; box-shadow: 0 8px 18px var(--ring); }
+#nextBtn, #submitBtn { background: linear-gradient(180deg, var(--cta), var(--cta-700)); color: #fff; }
+.btn.ghost { background: #fff; color: var(--brand); border: 1px solid #bae6fd; }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+
+.support { display: grid; gap: 10px; }
+.kv { display: grid; grid-template-columns: 20px 1fr; gap: 8px; align-items: start; font-size: 14px; }
+.kv svg { margin-top: 2px; }
+.support .kv > div { text-align: center; }
+.small { font-size: 12px; color: var(--muted); }
+.legal { font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+.alert { display:none; margin: 10px 0; padding: 10px 12px; border-radius: 10px; }
+.alert.err { background: #fee2e2; color: #7f1d1d; border: 1px solid #fecaca; }
+.alert.ok { background: #dcfce7; color: #14532d; border: 1px solid #bbf7d0; }
+</style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":["Organization","FinancialService"],"@id":"https://gatewaydebthelp.com/#gfsr","name":"Gateway Financial Settlement Relief, LLC","alternateName":["GFSR","Gateway Debt Help"],"url":"https://gatewaydebthelp.com/","telephone":"+1-888-437-7141","sameAs":["https://gatewaydebthelp.com/"],"disambiguatingDescription":"Not affiliated with Gateway Debt Relief of Costa Mesa, CA."}
 </script>
@@ -53,7 +110,7 @@
     <h1>Buried in debt? See every relief option that fits your situation — in about 60 seconds.</h1>
     <p class="sub">Gateway Debt Help walks you through credit card hardship relief, credit counseling, and credit-rebuild programs, so you choose with facts instead of guesswork. No hard credit check to see your options. No upfront fees.</p>
     <div style="margin-top:16px">
-      <button class="primary" id="startBtn">Start my 60-second options check</button>
+      <a class="primary" href="#optionsCheck" style="text-decoration:none">Start my 60-second options check</a>
     </div>
     <p style="margin-top:10px"><a href="tel:+18884377141">or talk to a person now</a></p>
     <ul class="hero-benefits">
@@ -73,50 +130,101 @@
     </div>
   </div>
 
-  <div class="card page-card cta-panel hidden" id="survey">
-    <div class="progress"><i id="progressBar"></i></div>
-    <div class="muted" id="stepLabel">Step 1 of 4</div>
-    <div id="stepMount"></div>
-    <div class="muted" style="margin-top:8px">Secure &amp; confidential. No obligation.</div>
-  </div>
+  <section class="card survey-highlight page-card" id="optionsCheck" aria-label="Free options check">
+    <h2 class="survey-title" style="margin-top:0">See the relief options that fit your situation</h2>
+    <p>Answer a few quick questions. No obligation, and no hard credit check for this intake.</p>
 
-  <div class="card page-card cta-panel hidden" id="leadGate">
-    <div class="prompt">Thanks — your answers help build your options summary.</div>
-    <div class="muted">Where should we send it?</div>
-    <form id="leadForm" autocomplete="on">
-      <input type="text" name="first" placeholder="First name" required autocomplete="given-name" />
-      <input type="email" name="email" placeholder="Email" required inputmode="email" autocomplete="email" />
-      <input type="tel" name="phone" placeholder="Phone" required inputmode="tel" autocomplete="tel" />
-      <input type="text" name="zip" placeholder="ZIP code" required inputmode="numeric" pattern="\d{5}" autocomplete="postal-code" maxlength="5" />
-      <input type="text" name="hp" id="hp" class="hidden" tabindex="-1" autocomplete="off" />
-      <input type="hidden" name="form_ts" id="form_ts" />
-      <label class="consent">
-        <input type="checkbox" name="consent_terms" required />
-        <span>I agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms</a> and <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
-      </label>
-      <label class="consent">
-        <input type="checkbox" name="consent_marketing" value="yes" />
-        <span>By checking this box, I agree that Gateway Financial Settlement Relief, LLC and its program partners may contact me at the phone number and email address I provided — by call, text/SMS, and email, including using an automatic telephone dialing system or an artificial or prerecorded voice — about debt relief options. Message and data rates may apply. I understand consent is not required to purchase any goods or services, and I may revoke this consent at any time by calling <a href="tel:+18884377141">+1 (888) 437-7141</a> or emailing <a href="mailto:support@gatewaydebthelp.com">support@gatewaydebthelp.com</a>.</span>
-      </label>
-      <p class="legal">Consent is not required to purchase services.</p>
-      <button class="button primary" type="submit">Send my options summary</button>
-      <p class="muted" style="margin-top:8px;text-align:center">No SSN or bank account required to see your options.</p>
-      
-    </form>
-  </div>
-
-  <div class="card page-card cta-panel hidden" id="results">
-    <div class="prompt">Example payment ranges (estimates only)</div>
-    <div class="calc">
-      <div><span class="badge" id="calcDebt">$—</span> total debt</div>
-      <div style="margin-top:10px">Estimated consolidated payment range: <strong id="calcPayment">$— / mo</strong></div>
-      <div class="muted" style="margin-top:6px">Estimates are examples, not guarantees. Your actual terms depend on program/lender review and are not approved or endorsed by any government agency.</div>
-      <div class="controls" style="display:flex;gap:10px;flex-wrap:wrap">
-        <a id="callCta" class="callnow" href="#">Call now</a>
-        <button class="next" id="doneBtn" style="width:auto">Back to start</button>
-      </div>
+    <div class="steps" aria-hidden="true">
+      <div class="step"><span id="s1"></span></div>
+      <div class="step"><span id="s2"></span></div>
     </div>
-  </div>
+
+    <div id="alert" class="alert err" role="alert"></div>
+
+    <form id="leadForm" novalidate>
+      <!-- hidden system fields -->
+      <input type="hidden" name="hp" id="hp" value="" autocomplete="off" />
+      <input type="hidden" name="form_ts" id="form_ts" value="" />
+      <input type="hidden" name="site" value="GDH" />
+      <input type="hidden" name="source" value="form" />
+      <input type="hidden" name="page_url" id="page_url" value="" />
+
+      <!-- STEP 1: Debt + situation -->
+      <section class="step-pane" data-step="1">
+        <label for="debt_amount">Estimated unsecured debt</label>
+        <select id="debt_amount" name="debt_amount" required>
+          <option value="" selected disabled>Select an amount</option>
+          <option value="5000">$5,000 – $9,999</option>
+          <option value="10000">$10,000 – $14,999</option>
+          <option value="15000">$15,000 – $24,999</option>
+          <option value="25000">$25,000 – $39,999</option>
+          <option value="40000">$40,000+</option>
+        </select>
+        <label for="state">State</label>
+        <select id="state" name="state" required>
+          <option value="" selected disabled>Select your state</option>
+          <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+        </select>
+        <label>Which debts? (optional)</label>
+        <div class="choices" id="debtTypes" role="group" aria-label="Debt types">
+          <button type="button" class="chip" data-val="Credit cards" aria-pressed="false">Credit cards</button>
+          <button type="button" class="chip" data-val="Personal loans" aria-pressed="false">Personal loans</button>
+          <button type="button" class="chip" data-val="Medical bills" aria-pressed="false">Medical bills</button>
+          <button type="button" class="chip" data-val="Other unsecured" aria-pressed="false">Other unsecured</button>
+        </div>
+        <label for="payment_status">Payment status (optional)</label>
+        <select id="payment_status" name="payment_status">
+          <option value="" selected>Prefer not to say</option>
+          <option>Current on payments</option>
+          <option>Missed 1–2 months</option>
+          <option>3+ months behind</option>
+        </select>
+      </section>
+
+      <!-- STEP 2: Contact (Name, Email, Phone) -->
+      <section class="step-pane" data-step="2" hidden>
+        <div class="row two">
+          <div>
+            <label for="full_name">First name, last name</label>
+            <input id="full_name" name="full_name" autocomplete="name" required placeholder="Jane Doe" />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+          </div>
+        </div>
+        <div class="row two">
+          <div>
+            <label for="phone">Mobile phone</label>
+            <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" pattern="^[+]?\d[\d\s().-]{7,}$" title="Enter a valid phone number" required placeholder="(555) 123-4567" />
+          </div>
+          <div>
+            <label for="zip">ZIP (optional)</label>
+            <input id="zip" name="zip" inputmode="numeric" autocomplete="postal-code" pattern="\d{5}" title="Enter a 5-digit ZIP" placeholder="e.g., 34449" />
+          </div>
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" id="terms" name="consent_terms" required />
+          <span>I agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms</a> and <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
+        </label>
+        <label class="consent">
+          <input type="checkbox" id="marketing" name="consent_marketing" value="yes" />
+          <span>By checking this box, I agree that Gateway Financial Settlement Relief, LLC and its program partners may contact me at the phone number and email address I provided — by call, text/SMS, and email, including using an automatic telephone dialing system or an artificial or prerecorded voice — about debt relief options. Message and data rates may apply. I understand consent is not required to purchase any goods or services, and I may revoke this consent at any time by calling <a href="tel:+18884377141">+1 (888) 437-7141</a> or emailing <a href="mailto:support@gatewaydebthelp.com">support@gatewaydebthelp.com</a>.</span>
+        </label>
+        <p class="legal">Consent is not required to purchase services.</p>
+
+        <button class="btn primary" id="submitBtn" type="submit" style="margin-top:12px;">Send my options summary</button>
+        <div id="ok" class="alert ok" role="status" style="display:none;margin-top:10px;">Thanks — your request was sent securely. A specialist will follow up with your options summary.</div>
+      </section>
+
+      <div class="row" style="margin-top:12px;">
+        <button type="button" class="btn primary" id="nextBtn">Next</button>
+      </div>
+    </form>
+
+    <p class="muted" style="margin-top:10px">Secure &amp; confidential. No obligation. No SSN or bank account required to see your options.</p>
+  </section>
 
   <section class="section container">
     <h2 style="color:var(--navy);font-size:clamp(20px,2vw + 10px,28px)">Three core paths we help you navigate</h2>
@@ -164,6 +272,10 @@
       <a href="/credit-counseling.html">Credit Counseling</a>
       <a href="/credit-rebuild.html">Credit Rebuild</a>
       <a href="/state-rules.html">State Rules</a>
+      <a href="/how-it-works.html">How It Works</a>
+      <a href="/savings-calculator.html">Savings Calculator</a>
+      <a href="/compare-us.html">Compare Us</a>
+      <a href="/reviews.html">Reviews</a>
       <a href="/about.html">About</a>
       <a href="/faq.html">FAQ</a>
       <a href="/blog/">Blog</a>
@@ -186,29 +298,6 @@
 
 <script src="/eng038.sitewide.js" defer></script>
 <script>
-const CONFIG = { LEAD_ENDPOINT: "/api/mesh/036-lead-router/ingest", SITE_TAG: "GDH", CALL_NUMBER: "+1 (888) 437-7141" };
-const state = { step: 0, answers: { debt_amount: null, debt_type: [], payment_status: null, credit_band: null, state: null } };
-
-const UTM_PARAMS = (() => {
-  const params = new URLSearchParams(window.location.search);
-  const out = {};
-  params.forEach((value, key) => {
-    if (!value) return;
-    const normalizedKey = key.trim().toLowerCase();
-    if (!normalizedKey) return;
-    if (/^(utm_[a-z0-9_]+|gclid|msclkid|fbclid|ttclid|yclid)$/.test(normalizedKey)) {
-      out[normalizedKey] = value.trim();
-    }
-  });
-  return out;
-})();
-
-const LANDING_CONTEXT = {
-  path: window.location.pathname,
-  query: window.location.search || "",
-  referrer: document.referrer || null
-};
-
 // === Responsive navigation toggle ===
 (function(){
   const toggle = document.getElementById('navToggle');
@@ -262,139 +351,146 @@ const LANDING_CONTEXT = {
   }
 })();
 
-const steps = [
-  function mountDebtAmount($){ $.innerHTML = `
-    <div class="prompt">About how much debt are you looking to roll into one payment?</div>
-    <div class="range">
-      <input id="rngDebt" type="range" min="0" max="4" step="1" value="1" />
-      <div class="range-labels"><span>Under $10k</span><span>$10–20k</span><span>$20–40k</span><span>$40–60k</span><span>$60k+</span></div>
-    </div>
-    <div class="controls"><button class="next" id="next">Next</button></div>`;
-    document.getElementById('next').onclick = ()=>{ const v = +document.getElementById('rngDebt').value; state.answers.debt_amount = ["<10k","10-20k","20-40k","40-60k",">60k"][v]; advance(); } },
-  function mountDebtType($){ $.innerHTML = `
-    <div class="prompt">Which debts do you want to combine into one simpler payment?</div>
-    <div class="choices" id="choices"></div>
-    <div class="controls"><button class="next" id="next" disabled>Next</button></div>`;
-    const items = ["Credit cards","Personal loans","Medical bills","Other unsecured debt"]; const sel = new Set(); const box = document.getElementById('choices'); const nextBtn = document.getElementById('next');
-    items.forEach(label=>{ const el = document.createElement('div'); el.className = 'choice'; el.textContent = label; el.onclick = ()=>{ if(sel.has(label)){ sel.delete(label); el.classList.remove('active'); } else { sel.add(label); el.classList.add('active'); } nextBtn.disabled = sel.size===0; }; box.appendChild(el); });
-    nextBtn.onclick = ()=>{ state.answers.debt_type = Array.from(sel); advance(); } },
-  function mountPayCredit($){ $.innerHTML = `
-    <div class="prompt">Are you mostly keeping up with payments, or have you missed some?</div>
-    <div class="choices" id="pay"></div>
-    <div class="prompt" style="margin-top:18px">If you know your credit score, which range sounds about right?</div>
-    <div class="choices" id="cred"></div>
-    <div class="controls"><button class="next" id="next">Next</button></div>`;
-    const pay = ["I'm current on payments","Missed 1–2 months","3+ months behind"], cred = ["720+","660–719","600–659","Below 600","Not sure"]; let payPick=null, credPick=null;
-    function radio(id, items, on){ const box = document.getElementById(id); items.forEach(label=>{ const el = document.createElement('div'); el.className='choice'; el.textContent=label; el.onclick=()=>{ Array.from(box.children).forEach(c=>c.classList.remove('active')); el.classList.add('active'); on(label); }; box.appendChild(el); }); }
-    radio('pay', pay, v=> payPick=v); radio('cred', cred, v=> credPick=v);
-    document.getElementById('next').onclick = ()=>{ state.answers.payment_status = payPick; state.answers.credit_band = credPick; advance(); } },
-  function mountState($){ $.innerHTML = `
-    <div class="prompt">Where do you live?</div>
-    <select id="selState" required></select>
-    <div class="controls"><button class="next" id="next">Next</button></div>`;
-    const states = ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"];
-    const sel = document.getElementById('selState'); sel.innerHTML = '<option value="" disabled selected>Select your state</option>' + states.map(s=>`<option>${s}</option>`).join('');
-    document.getElementById('next').onclick = ()=>{ state.answers.state = sel.value || null; showLeadGate(); } }
-];
+// === 2-step lead form (GFSR survey model) -> 036 lead router ===
+(function () {
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => Array.from(document.querySelectorAll(s));
 
-const entry = document.getElementById('entry'); const survey = document.getElementById('survey'); const mount = document.getElementById('stepMount'); const stepLabel = document.getElementById('stepLabel'); const bar = document.getElementById('progressBar'); const leadGate = document.getElementById('leadGate'); const results = document.getElementById('results');
-const BASE_UTM = Object.keys(UTM_PARAMS).length ? UTM_PARAMS : undefined;
+  const panes = $$('.step-pane');
+  const bars = panes.map((_, idx) => $('#s' + (idx + 1)));
+  const totalSteps = panes.length;
+  let step = 1; // 1..totalSteps
 
-const startBtn = document.getElementById('startBtn');
-const callCta = document.getElementById('callCta');
-const stickyCall = document.getElementById('stickyCall');
+  const alertBox = $('#alert');
+  const nextBtn = $('#nextBtn');
+  const form = $('#leadForm');
+  const formTs = $('#form_ts');
+  const hp = $('#hp');
+  const pageUrl = $('#page_url');
+  if (!form) return;
 
-startBtn.addEventListener('click', ()=>{ startSurvey(); });
-function startSurvey(){ entry.classList.add('hidden'); survey.classList.remove('hidden'); state.step = 0;
-  updateProgress(); steps[state.step](mount); document.getElementById('form_ts').value = Date.now().toString(); }
-function advance(){ state.step++;
-  if(state.step < steps.length){ updateProgress(); steps[state.step](mount);} else { showLeadGate(); } }
-function updateProgress(){ const total = steps.length; const n = state.step + 1; stepLabel.textContent = `Step ${n} of ${total}`; bar.style.width = `${(n/total)*100}%`; }
-function showLeadGate(){ survey.classList.add('hidden'); leadGate.classList.remove('hidden'); }
+  formTs.value = String(Date.now());
+  pageUrl.value = location.href;
+  setTimeout(() => { hp.value = ''; }, 600);
 
-// Lead submit -> 036 router
-const form = document.getElementById('leadForm');
-const statusEl = document.getElementById('leadStatus');
-const DEBT_RANGE_MAP = { "<10k": 8000, "10-20k":15000, "20-40k":30000, "40-60k":50000, ">60k":70000 };
-
-function setStatus(message, mode = 'info'){
-  if(!statusEl) return;
-  statusEl.textContent = message || '';
-  statusEl.classList.toggle('hidden', !message);
-  statusEl.dataset.mode = mode;
-}
-
-async function submitLead(payload){
-  const res = await fetch(CONFIG.LEAD_ENDPOINT, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(payload)
+  // selected debt types (optional, chip multi-select)
+  const pickedDebtTypes = new Set();
+  $$('#debtTypes .chip').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const val = chip.getAttribute('data-val');
+      const on = chip.getAttribute('aria-pressed') === 'true';
+      chip.setAttribute('aria-pressed', on ? 'false' : 'true');
+      if (on) { pickedDebtTypes.delete(val); } else { pickedDebtTypes.add(val); }
+    });
   });
-  let data = null;
-  try { data = await res.json(); } catch(err){ console.warn('Lead router response parse error', err); }
-  if(!res.ok){ const reason = data?.reason || data?.error || `HTTP ${res.status}`; throw new Error(reason); }
-  return data;
-}
 
-form.addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const submitBtn = form.querySelector('button[type="submit"]');
-  submitBtn?.setAttribute('disabled', 'true');
-  setStatus('Submitting your details securely...');
-  const fd = new FormData(form);
-  const phone = (fd.get('phone')||'').toString().replace(/[^\d+]/g,'');
-  const marketingValue = fd.get('consent_marketing');
-  const marketingOptIn = typeof marketingValue === 'string'
-    ? ['on', 'yes', 'true', '1'].includes(marketingValue.toLowerCase())
-    : false;
-  const consent = {
-    terms: fd.get('consent_terms') === 'on',
-    marketing: marketingOptIn,
-    timestamp: new Date().toISOString(),
-    disclosure_version: '2026-07-gdh-homepage-v1'
-  };
-  const { state: stateAnswer, debt_amount: debtRange, ...restAnswers } = state.answers;
-  const debtAmount = DEBT_RANGE_MAP[debtRange] || null;
-  const payload = {
-    name: (fd.get('first')||'').toString().trim(),
-    email: (fd.get('email')||'').toString().trim(),
-    phone,
-    zip: (fd.get('zip')||'').toString().trim(),
-    source: CONFIG.SITE_TAG,
-    hp: (fd.get('hp')||'').toString(),
-    form_ts: Number(fd.get('form_ts')||Date.now()),
-    state: stateAnswer || null,
-    debt_amount: debtAmount,
-    meta: (() => {
-      const meta = {
-        entrypoint: 'home_survey',
-        site_tag: CONFIG.SITE_TAG,
-        landing: LANDING_CONTEXT,
-        survey: { ...restAnswers, debt_amount_range: debtRange || null, state: stateAnswer || null }
-      };
-      if (BASE_UTM) { meta.utm_snapshot = BASE_UTM; }
-      return meta;
-    })(),
-    utm: BASE_UTM,
-    consent
-  };
-  try {
-    const res = await submitLead(payload);
-    const status = res?.status || 'accepted';
-    if(status === 'accepted' || status === 'duplicate'){ setStatus(''); showResults(); }
-    else if (status === 'limited') { setStatus('We received your request but are temporarily limiting submissions. Please try again shortly.', 'warn'); }
-    else { const reason = res?.reason || 'Your request could not be completed. Please call us to finish your review.'; setStatus(reason, 'error'); }
-  } catch(err){
-    console.error('Lead router submission failed', err);
-    setStatus('We could not submit your details. Please check your connection and try again.', 'error');
-  } finally {
-    submitBtn?.removeAttribute('disabled');
+  // UTM whitelist: attribution params only, trimmed
+  function collectUtm(){
+    const params = new URLSearchParams(location.search);
+    const out = {};
+    params.forEach((value, key) => {
+      if (!value) return;
+      const k = key.trim().toLowerCase();
+      if (!k) return;
+      if (/^(utm_[a-z0-9_]+|gclid|msclkid|fbclid|ttclid|yclid)$/.test(k)) {
+        out[k] = value.trim();
+      }
+    });
+    return out;
   }
-});
 
-function showResults(){ leadGate.classList.add('hidden'); results.classList.remove('hidden'); const debtNum = DEBT_RANGE_MAP[state.answers.debt_amount] || 15000; document.getElementById('calcDebt').textContent = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(debtNum); const apr=0.17, termMonths=60, rate=apr/12; const pmt=(debtNum*rate)/(1-Math.pow(1+rate,-termMonths)); const low=Math.round(pmt*0.75), high=Math.round(pmt*1.05); document.getElementById('calcPayment').textContent = `${fmt(low)} – ${fmt(high)}`; const telHref = `tel:${CONFIG.CALL_NUMBER.replace(/[^\d+]/g,'')}`; if(callCta){ callCta.setAttribute('href', telHref); } if(stickyCall){ stickyCall.setAttribute('href', telHref); } }
-function fmt(n){ return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n); }
-document.getElementById('doneBtn').onclick = ()=>{ results.classList.add('hidden'); entry.classList.remove('hidden'); };
+  function setStep(n){
+    step = n; panes.forEach(p => p.hidden = Number(p.dataset.step) !== step);
+    bars.forEach((b, i) => { if (!b) return; b.style.width = (i < step) ? '100%' : '0%'; });
+    nextBtn.style.display = step === totalSteps ? 'none' : 'inline-flex';
+  }
+  function showError(msg){ alertBox.textContent = msg; alertBox.style.display='block'; }
+  function clearError(){ alertBox.textContent=''; alertBox.style.display='none'; }
+
+  // validations per step
+  function validateCurrent(){
+    clearError();
+    if (step === 1) {
+      const debt = $('#debt_amount').value;
+      if (!debt) return 'Select your estimated unsecured debt.';
+      const st = $('#state').value;
+      if (!st) return 'Select your state.';
+    }
+    return '';
+  }
+
+  nextBtn.addEventListener('click', () => {
+    const err = validateCurrent(); if (err) return showError(err);
+    if (step < totalSteps) setStep(step + 1);
+  });
+  setStep(1);
+
+  // submit handler -> GDH lead payload
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); clearError();
+
+    const fullName = $('#full_name'); const email = $('#email'); const phone = $('#phone'); const terms = $('#terms');
+    if (!fullName.value.trim()) return showError('Please enter your first and last name.');
+    if (!email.checkValidity()) return showError('Enter a valid email address.');
+    if (!phone.checkValidity()) return showError('Please enter a valid phone number.');
+    if (!terms.checked) return showError('Please agree to the terms to continue.');
+
+    const debtRange = $('#debt_amount').value;
+    const stateVal = ($('#state')?.value || '').trim();
+    const paymentStatus = ($('#payment_status')?.value || '').trim();
+    const debtTypes = Array.from(pickedDebtTypes);
+    const payload = {
+      name: fullName.value.trim(),
+      email: email.value.trim(),
+      phone: phone.value.trim().replace(/[^\d+]/g, ''),
+      zip: ($('#zip')?.value || '').trim(),
+      state: stateVal || null,
+      debt_amount: Number(debtRange),
+      consent: {
+        terms: true,
+        marketing: !!($('#marketing') && $('#marketing').checked),
+        timestamp: new Date().toISOString(),
+        disclosure_version: '2026-07-gdh-homepage-v1'
+      },
+      hp: hp.value,
+      form_ts: Number(formTs.value),
+      source: 'form',
+      site: 'GDH',
+      page_url: pageUrl.value,
+      meta: {
+        entrypoint: 'home_survey',
+        site_tag: 'GDH',
+        landing: { path: location.pathname, query: location.search || '', referrer: document.referrer || null },
+        survey: {
+          debt_amount_range: debtRange || null,
+          debt_type: debtTypes,
+          payment_status: paymentStatus || null,
+          state: stateVal || null
+        }
+      },
+      utm: collectUtm()
+    };
+
+    const endpoint = '/api/mesh/036-lead-router/ingest';
+    const okBox = $('#ok');
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      okBox.style.display = 'block';
+      pickedDebtTypes.clear();
+      $$('#debtTypes .chip').forEach((c) => c.setAttribute('aria-pressed', 'false'));
+      form.reset(); setStep(1);
+    } catch (err) {
+      console.warn('Lead POST failed:', err);
+      showError('Sorry — we could not submit your request just now. Please try again, or call us at +1 (888) 437-7141. Your details have been kept so you can resend.');
+    }
+  });
+})();
+
 document.getElementById('y').textContent = new Date().getFullYear();
 </script>
 </body>
