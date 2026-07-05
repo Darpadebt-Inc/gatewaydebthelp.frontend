@@ -33,3 +33,11 @@ jobs:
         run: node scripts/check-blog-structure.mjs
       - name: Check blog readiness (033 commit prerequisites)
         run: node scripts/check-blog-ready.mjs
+      - name: Blog contract — article anatomy (§10, block new/changed)
+        run: node scripts/check-blog-article-anatomy.mjs
+      - name: Blog contract — contextual cross-site only (§10)
+        run: node scripts/check-blog-cross-site-contextual-only.mjs
+      - name: Blog contract — H2/H3 density (§10)
+        run: node scripts/check-blog-h2-h3-density.mjs
+      - name: Blog contract — lead-capture efficiency (§10)
+        run: node scripts/check-blog-lead-capture-contract.mjs
