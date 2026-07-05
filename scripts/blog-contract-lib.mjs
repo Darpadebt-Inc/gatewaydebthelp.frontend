@@ -56,12 +56,54 @@ export async function classify(rel, manifest) {
   return { rel, text, mode };
 }
 
+// Character-scanner tag stripping (no regex tag-filtering): removes <script>/<style>
+// blocks including content, drops other tags keeping inner text. Scanner-based on
+// purpose — regex HTML filters are bypassable (CodeQL js/bad-tag-filter) even though
+// this is only an offline word-counter.
+export function removeElementBlocks(html, tag) {
+  const lower = html.toLowerCase();
+  const open = `<${tag}`;
+  const close = `</${tag}`;
+  let out = '';
+  let i = 0;
+  while (i < html.length) {
+    const start = lower.indexOf(open, i);
+    if (start === -1) {
+      out += html.slice(i);
+      break;
+    }
+    out += `${html.slice(i, start)} `;
+    const end = lower.indexOf(close, start + open.length);
+    if (end === -1) break; // unterminated block: drop the remainder
+    const gt = lower.indexOf('>', end + close.length);
+    i = gt === -1 ? html.length : gt + 1;
+  }
+  return out;
+}
+
+export function dropTags(html) {
+  let out = '';
+  let inTag = false;
+  for (let i = 0; i < html.length; i++) {
+    const ch = html[i];
+    if (ch === '<') {
+      inTag = true;
+      out += ' ';
+      continue;
+    }
+    if (ch === '>') {
+      inTag = false;
+      continue;
+    }
+    if (!inTag) out += ch;
+  }
+  return out;
+}
+
 export function stripTags(html) {
-  return html
-    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&[a-z#0-9]+;/gi, ' ');
+  const noScript = removeElementBlocks(html, 'script');
+  const noStyle = removeElementBlocks(noScript, 'style');
+  return dropTags(noStyle).replace(/&[a-z#0-9]+;/gi, ' ');
 }
 export function countWords(text) {
   const t = text.trim();
