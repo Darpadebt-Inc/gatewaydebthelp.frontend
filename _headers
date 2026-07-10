@@ -64,3 +64,11 @@
 
 /content/blog/*
   Cache-Control: public, max-age=300
+
+/blogs.json
+  Cache-Control: no-store, must-revalidate
+  Content-Type: application/json; charset=utf-8
+  Vary: Accept, Origin
+
+/blog/*
+  Cache-Control: public, max-age=300

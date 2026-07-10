@@ -3,10 +3,17 @@
   <channel>
     <title>Gateway Debt Help Blog</title>
     <link>https://gatewaydebthelp.com/blog/</link>
-    <description>Debt help guides and insights from Gateway Debt Help — debt consolidation, debt settlement, credit card hardship relief, debt validation rights, and bankruptcy alternatives.</description>
+    <description>Gateway Debt Help debt relief guides and insights.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Jun 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 10 Jul 2026 01:44:42 GMT</lastBuildDate>
     <atom:link href="https://gatewaydebthelp.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>How Rebuilding Credit After Debt Relief Works: A Practical Guide</title>
+      <link>https://gatewaydebthelp.com/blog/how-rebuilding-credit-after-debt-relief-works</link>
+      <guid isPermaLink="true">https://gatewaydebthelp.com/blog/how-rebuilding-credit-after-debt-relief-works</guid>
+      <pubDate>Fri, 10 Jul 2026 01:44:42 GMT</pubDate>
+      <description>Understand rebuilding credit after debt relief with a documented guide covering the timelines, written terms, and transparent debt relief steps you can verify</description>
+    </item>
     <item>
       <title>How to Set Up a Hardship Payment Plan</title>
       <link>https://gatewaydebthelp.com/blog/how-to-set-up-a-hardship-payment-plan</link>
@@ -42,5 +49,5 @@
       <pubDate>Tue, 30 Jun 2026 12:00:00 GMT</pubDate>
       <description>After paying off debt, learn how to rebuild an emergency fund and set up sinking funds so your finances stay resilient against future surprises.</description>
     </item>
-</channel>
+  </channel>
 </rss>
