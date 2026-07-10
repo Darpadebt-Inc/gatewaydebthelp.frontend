@@ -39,5 +39,7 @@ jobs:
         run: node scripts/check-blog-cross-site-contextual-only.mjs
       - name: Blog contract — H2/H3 density (§10)
         run: node scripts/check-blog-h2-h3-density.mjs
+      - name: Blog contract — density chrome-parity selftest (E3-FVP fixtures)
+        run: node scripts/check-blog-density-selftest.mjs
       - name: Blog contract — lead-capture efficiency (§10)
         run: node scripts/check-blog-lead-capture-contract.mjs

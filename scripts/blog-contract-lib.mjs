@@ -105,6 +105,103 @@ export function stripTags(html) {
   const noStyle = removeElementBlocks(noScript, 'style');
   return dropTags(noStyle).replace(/&[a-z#0-9]+;/gi, ' ');
 }
+
+// E3-FVP: 031/033-injected chrome & furniture modules. The pipeline gates the
+// EDITORIAL artifact against §5 and the publish path then composes non-editorial
+// modules around it (lead-form segues, required internal links, cross-domain
+// clusters, compliance notice, related reading, the final CTA section). These
+// are excluded ONLY from the §5 density surface (H2 sections / H3 count /
+// editorial words) so the repo-boundary verdict matches the accepted backend
+// contract surface. They are NOT removed from the page, and every other check
+// (anchors, CTA, cross-site, brand-trust-links, proof assets, scripts) still
+// reads the full region — coverage and all §5 bands are unchanged.
+export const CHROME_BLOCK_MARKERS = [
+  'leadform-segway',
+  'required-internal-links',
+  'brand-trust-links',
+  'cross-domain-clusters',
+  'compliance-notice',
+  'related-reading',
+  'cta-section',
+];
+export const CHROME_INLINE_MARKERS = [
+  'module-label',
+  'module-eyebrow',
+  'blog-final-cta',
+  'blog-cta-disclaimer',
+  'cta-note',
+  'compliance-legal-disclaimer',
+];
+const CHROME_CONTAINER_TAGS = new Set(['section', 'aside', 'div']);
+const CHROME_INLINE_TAGS = new Set(['p', 'span']);
+
+function chromeClassMatch(openTagText, markers) {
+  const cls = openTagText.match(/class\s*=\s*"([^"]*)"/i);
+  if (!cls) return false;
+  const names = cls[1].toLowerCase().split(/\s+/).filter(Boolean);
+  return markers.some((m) => names.includes(m));
+}
+
+function isChromeBlockOpenTag(openTagText) {
+  if (chromeClassMatch(openTagText, CHROME_BLOCK_MARKERS)) return true;
+  if (/data-blog-module\s*=\s*"related"/i.test(openTagText)) return true;
+  if (/data-contentforge-marker\s*=\s*"required-links"/i.test(openTagText)) return true;
+  return false;
+}
+
+// Character-scanner element dropper (same no-regex-tag-filtering posture as
+// removeElementBlocks): removes whole elements whose open tag carries a chrome
+// marker, depth-counting same-tag nesting. An unterminated chrome block drops
+// the remainder, mirroring removeElementBlocks' unterminated behavior.
+export function removeChromeBlocks(html) {
+  const lower = html.toLowerCase();
+  let out = '';
+  let i = 0;
+  while (i < html.length) {
+    const lt = html.indexOf('<', i);
+    if (lt === -1) { out += html.slice(i); break; }
+    out += html.slice(i, lt);
+    const gt = html.indexOf('>', lt);
+    if (gt === -1) { out += html.slice(lt); break; }
+    const openTagText = html.slice(lt, gt + 1);
+    const nameMatch = openTagText.match(/^<\s*([a-z0-9]+)/i);
+    const tag = nameMatch ? nameMatch[1].toLowerCase() : null;
+    const isChrome = !!tag && (
+      (CHROME_CONTAINER_TAGS.has(tag) && isChromeBlockOpenTag(openTagText))
+      || (CHROME_INLINE_TAGS.has(tag) && chromeClassMatch(openTagText, CHROME_INLINE_MARKERS))
+    );
+    if (!isChrome) { out += openTagText; i = gt + 1; continue; }
+    if (openTagText.endsWith('/>')) { out += ' '; i = gt + 1; continue; }
+    const open = `<${tag}`;
+    const close = `</${tag}`;
+    let depth = 1;
+    let j = gt + 1;
+    while (j < html.length && depth > 0) {
+      const nextClose = lower.indexOf(close, j);
+      if (nextClose === -1) { j = html.length; break; }
+      let nextOpen = -1;
+      let k = j;
+      while (k < html.length) {
+        k = lower.indexOf(open, k);
+        if (k === -1 || k > nextClose) break;
+        const ch = lower[k + open.length];
+        if (ch === '>' || ch === ' ' || ch === '\t' || ch === '\n' || ch === '/') { nextOpen = k; break; }
+        k += open.length;
+      }
+      if (nextOpen !== -1) {
+        depth += 1;
+        j = nextOpen + open.length;
+      } else {
+        depth -= 1;
+        const cg = lower.indexOf('>', nextClose);
+        j = cg === -1 ? html.length : cg + 1;
+      }
+    }
+    out += ' ';
+    i = j;
+  }
+  return out;
+}
 export function countWords(text) {
   const t = text.trim();
   return t ? t.split(/\s+/).filter(Boolean).length : 0;
@@ -118,10 +215,13 @@ export function editorialRegion(html) {
 }
 export function parseArticle(html) {
   const region = editorialRegion(html);
+  // §5 density is computed on the chrome-stripped surface (E3-FVP backend
+  // parity); every other field below stays on the full region.
+  const densityRegion = removeChromeBlocks(region);
   const h1Count = (region.match(/<h1[\s>]/gi) || []).length;
-  const h3Count = (region.match(/<h3[\s>]/gi) || []).length;
-  const h2Split = region.split(/<h2[^>]*>/i);
-  const preamble = h2Split[0] ?? region;
+  const h3Count = (densityRegion.match(/<h3[\s>]/gi) || []).length;
+  const h2Split = densityRegion.split(/<h2[^>]*>/i);
+  const preamble = h2Split[0] ?? densityRegion;
   const h2Sections = [];
   for (let i = 1; i < h2Split.length; i++) {
     const chunk = h2Split[i];
@@ -138,10 +238,11 @@ export function parseArticle(html) {
   }
   return {
     h1Count, h3Count, h2Sections, anchors,
-    editorialWords: countWords(stripTags(region)),
+    editorialWords: countWords(stripTags(densityRegion)),
     hasBrandTrustLinks: /class\s*=\s*"[^"]*brand-trust-links/i.test(region),
     introWordsBeforeFirstH2: countWords(stripTags(preamble.replace(/<h1[\s\S]*?<\/h1>/i, ' '))),
     region,
+    densityRegion,
   };
 }
 export function hostOf(href) {
