@@ -29,6 +29,12 @@ jobs:
           node-version: '22'
       - name: Verify blog feed
         run: node scripts/verify-blog-feed.mjs
+      # C5FT: report-only client-surface sanitizer shadow (duplicate pretty URLs,
+      # date-suffix slug mutants, malformed index url fields). Observational only:
+      # the script always exits 0 and the step is continue-on-error as well.
+      - name: Client-surface sanitizer shadow (report-only)
+        continue-on-error: true
+        run: node scripts/check-client-surface-sanitizer-shadow.mjs
       - name: Check blog structure (033 commit contract)
         run: node scripts/check-blog-structure.mjs
       - name: Check blog readiness (033 commit prerequisites)
