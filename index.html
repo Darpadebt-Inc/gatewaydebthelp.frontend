@@ -447,7 +447,7 @@ input:focus, select:focus { border-color: var(--brand-600); box-shadow: 0 0 0 4p
       state: stateVal || null,
       debt_amount: Number(debtRange),
       consent: {
-        terms: true,
+        terms: !!($('#terms') && $('#terms').checked),
         marketing: !!($('#marketing') && $('#marketing').checked),
         timestamp: new Date().toISOString(),
         disclosure_version: '2026-07-gdh-homepage-v1'
