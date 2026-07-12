@@ -115,6 +115,10 @@ export function stripTags(html) {
 // contract surface. They are NOT removed from the page, and every other check
 // (anchors, CTA, cross-site, brand-trust-links, proof assets, scripts) still
 // reads the full region — coverage and all §5 bands are unchanged.
+// Canonical section-classification authority parity pins (backend
+// shared/section-classification-authority.ts must agree byte-for-byte).
+export const SECTION_CLASSIFICATION_AUTHORITY_VERSION = 'section-classification-authority-v1';
+export const SECTION_CLASSIFICATION_POLICY_HASH = 'e25056be2ccfd30b';
 export const CHROME_BLOCK_MARKERS = [
   'leadform-segway',
   'required-internal-links',
@@ -221,14 +225,27 @@ export function parseArticle(html) {
   const h1Count = (region.match(/<h1[\s>]/gi) || []).length;
   const h3Count = (densityRegion.match(/<h3[\s>]/gi) || []).length;
   const h2Split = densityRegion.split(/<h2[^>]*>/i);
+  // Section classification (canonical authority parity): an H2 section is a
+  // TERMINAL_MODULE iff it is the LAST H2 span AND its RAW (pre-strip) span
+  // carries the composed final-CTA container. Structural marker only - heading
+  // text can never reclassify a section, so a genuinely short editorial
+  // section cannot hide behind a module heading.
+  const rawChunks = region.split(/<h2[^>]*>/i);
   const preamble = h2Split[0] ?? densityRegion;
+  const sectionCount = h2Split.length - 1;
   const h2Sections = [];
   for (let i = 1; i < h2Split.length; i++) {
     const chunk = h2Split[i];
     const headingEnd = chunk.search(/<\/h2>/i);
     const heading = stripTags(headingEnd >= 0 ? chunk.slice(0, headingEnd) : '').trim();
     const body = headingEnd >= 0 ? chunk.slice(headingEnd + 5) : chunk;
-    h2Sections.push({ heading, words: countWords(stripTags(body)) });
+    const isTerminalModule = i === sectionCount
+      && /class\s*=\s*"[^"]*\bcta-section\b/i.test(rawChunks[i] ?? '');
+    h2Sections.push({
+      heading,
+      words: countWords(stripTags(body)),
+      classification: isTerminalModule ? 'TERMINAL_MODULE' : 'EDITORIAL',
+    });
   }
   const anchors = [];
   const anchorRe = /<a\b[^>]*href\s*=\s*"([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
